@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LENTERA - Jadwal Kegiatan &amp; Pemantauan</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Phosphor Icons (Sama dengan dashboard.html) -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              900: '#0b1329',
+              800: '#0f172a',
+              700: '#1e293b',
+              600: '#334155'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.45)); }
+      50% { filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.8)); }
+    }
+    .glow-lantern {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+  </style>
+</head>
+<body class="bg-[#f3f6fb] text-slate-800 font-sans min-h-screen flex antialiased">
+
+  <!-- BEGIN: Sidebar (Persis dengan dashboard.html) -->
+  <aside class="w-72 bg-[#0b1329] text-white flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-30 min-h-screen sticky top-0 shadow-2xl" id="main-sidebar">
+    <!-- Top Branding & Navigation -->
+    <div class="p-6">
+      <!-- Logo Lentera -->
+      <div class="flex items-center space-x-3.5 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-400/30 flex items-center justify-center p-2 shadow-inner glow-lantern">
+          <svg class="w-full h-full" fill="none" viewBox="0 0 64 64">
+            <path d="M22 14h20l4 8H18l4-8z" fill="#f59e0b" fill-opacity="0.9"></path>
+            <path d="M18 22h28l-5 30H23L18 22z" fill="#fbbf24" fill-opacity="0.3" stroke="#f59e0b" stroke-width="2"></path>
+            <circle class="animate-ping" cx="32" cy="34" fill="#fef08a" r="7" style="animation-duration: 3s; opacity: 0.7;"></circle>
+            <circle cx="32" cy="34" fill="#fff" r="5"></circle>
+            <path d="M23 52h18v4H23v-4z" fill="#d97706"></path>
+            <path d="M32 6v8M26 6h12" stroke="#f59e0b" stroke-linecap="round" stroke-width="2.5"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-extrabold tracking-wider text-xl leading-tight bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-white to-amber-400">
+            LENTERA
+          </h1>
+          <p class="text-[10px] text-slate-400 font-medium tracking-tight leading-tight mt-0.5">
+            Layanan Ekosistem Nusantara:<br><span class="text-amber-400/80">Terpadu, Responsif, &amp; Adaptif</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav aria-label="Menu Utama" class="space-y-1.5">
+        <!-- Beranda -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html">
+          <i class="ph ph-house group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm font-semibold">Beranda</span>
+        </a>
+
+        <!-- Indeks Kesiapan Hybrid -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="index.html">
+          <i class="ph ph-chart-bar group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm">Indeks Kesiapan Hybrid</span>
+        </a>
+
+        <!-- Paket Layanan -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#paket-layanan">
+          <i class="ph ph-package group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm">Paket Layanan</span>
+        </a>
+
+        <!-- Mobile Service Unit -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#mobile-service">
+          <i class="ph ph-truck group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm">Mobile Service Unit</span>
+          <span class="ml-auto text-[10px] bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-500/30">18 Armada</span>
+        </a>
+
+        <!-- Deteksi Dini & Pengawasan -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#deteksi-dini">
+          <i class="ph ph-shield-check group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm">Deteksi Dini &amp; Pengawasan</span>
+          <span class="w-2 h-2 rounded-full bg-rose-500 ml-auto animate-pulse"></span>
+        </a>
+
+        <!-- Jadwal & Reminder (ACTIVE PAGE) -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white font-medium shadow-md shadow-blue-600/30 transition" href="jadwal-kegiatan.html">
+          <i class="ph ph-calendar-blank text-xl"></i>
+          <span class="text-sm font-semibold">Jadwal &amp; Reminder</span>
+          <span class="ml-auto text-[10px] bg-white/20 text-white font-bold px-2 py-0.5 rounded-full">4 Agenda</span>
+        </a>
+
+        <!-- Data & Peta -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#peta-nusantara">
+          <i class="ph ph-map-trifold group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm">Data &amp; Peta</span>
+        </a>
+
+        <!-- Laporan & Analitik -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#laporan-analitik">
+          <i class="ph ph-file-text group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm">Laporan &amp; Analitik</span>
+        </a>
+
+        <!-- Pengaturan -->
+        <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#pengaturan">
+          <i class="ph ph-gear group-hover:text-amber-400 transition text-xl"></i>
+          <span class="text-sm">Pengaturan</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Bottom: Card Filosofi Lentera -->
+    <div class="p-5 m-4 rounded-2xl bg-gradient-to-b from-[#142247] to-[#0d162e] border border-blue-900/40 relative overflow-hidden group">
+      <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-amber-500/20 transition"></div>
+      <div class="flex items-center gap-3 mb-2.5">
+        <div class="p-2 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30">
+          <i class="ph ph-lamp-charge text-xl"></i>
+        </div>
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Filosofi LENTERA</span>
+      </div>
+      <p class="text-[12px] text-slate-300 italic leading-relaxed">
+        "Menghadirkan cahaya kebijakan hingga ke wilayah yang selama ini luput dari rerata statistik nasional."
+      </p>
+      <div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online v2.4</span>
+        <button class="text-blue-400 hover:text-amber-300 font-semibold transition" onclick="showToast('Panduan Kebijakan Filosofi LENTERA Terbuka')">Selengkapnya →</button>
+      </div>
+    </div>
+  </aside>
+  <!-- END: Sidebar -->
+
+  <!-- MAIN WRAPPER -->
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <!-- TOP HEADER -->
+    <header class="h-20 bg-white border-b border-slate-200/80 px-8 flex items-center justify-between sticky top-0 z-20 shadow-xs backdrop-blur-md bg-white/95">
+      <div class="flex items-center gap-4">
+        <button onclick="toggleSidebar()" class="text-slate-600 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100 transition focus:outline-none">
+          <i class="ph ph-list text-2xl"></i>
+        </button>
+        <div class="flex items-center gap-2 text-xs md:text-sm text-slate-500">
+          <a href="dashboard.html" class="hover:text-slate-800 font-medium">LENTERA</a>
+          <i class="ph ph-caret-right text-xs text-slate-300"></i>
+          <span class="font-semibold text-slate-900">Jadwal Kegiatan &amp; Pemantauan</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Module Link Badge -->
+        <a href="index.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold border border-slate-200 transition">
+          <i class="ph ph-sliders text-blue-600"></i>
+          <span>Pengukuran IKH</span>
+        </a>
+
+        <!-- Sinkronkan Kalender CTA -->
+        <button onclick="syncCalendar()" id="syncBtn" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-blue-600 border border-blue-600/40 text-xs font-semibold shadow-xs transition">
+          <i class="fa-solid fa-arrows-rotate" id="syncIcon"></i>
+          <span>Sinkronkan Kalender</span>
+        </button>
+
+        <!-- Notification Bell -->
+        <button onclick="showToast('Anda memiliki 3 pengingat kepatuhan aktif');" class="relative p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 transition">
+          <i class="ph ph-bell text-xl"></i>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+        </button>
+
+        <!-- User Profile -->
+        <div class="flex items-center gap-3 pl-3 border-l border-slate-200">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-md ring-2 ring-blue-100">
+            AL
+          </div>
+          <div class="hidden md:block text-left">
+            <div class="text-xs font-bold text-slate-800 leading-tight">Admin LENTERA</div>
+            <div class="text-[11px] text-slate-500">Kementerian Dalam Negeri</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <main class="p-8 max-w-7xl mx-auto w-full space-y-6">
+
+      <!-- SUB-NAVIGATION TABS & CONTEXT BAR -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Jadwal Kegiatan &amp; Pemantauan</h2>
+          <p class="text-xs text-slate-500 mt-1">Koordinasi agenda lapangan, verifikasi data IKH, dan pemantauan Mobile Service Unit di wilayah Malinau.</p>
+        </div>
+
+        <!-- Sub-nav Tabs -->
+        <div class="flex items-center bg-slate-200/80 p-1 rounded-xl self-start sm:self-auto">
+          <button class="sub-tab px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-blue-600 shadow-xs" onclick="setSubTab(this, 'kalender')">
+            <i class="fa-regular fa-calendar mr-1.5"></i>Kalender
+          </button>
+          <button class="sub-tab px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900" onclick="setSubTab(this, 'agenda')">
+            <i class="fa-solid fa-list-check mr-1.5"></i>Agenda List
+          </button>
+          <button class="sub-tab px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900" onclick="setSubTab(this, 'riwayat')">
+            <i class="fa-solid fa-clock-rotate-left mr-1.5"></i>Riwayat Kegiatan
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN 2-COLUMN VIEW -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- LEFT COLUMN -->
+        <div class="lg:col-span-7 space-y-6">
+
+          <!-- CALENDAR & SELECTED DAY WRAPPER -->
+          <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+            
+            <!-- Calendar Header Actions -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+              <div class="flex items-center gap-2">
+                <span class="text-lg font-bold text-slate-800" id="currentMonthYear">Mei 2026</span>
+                <div class="flex items-center bg-slate-100 rounded-lg p-0.5 border border-slate-200 ml-2">
+                  <button onclick="changeMonth(-1)" class="w-7 h-7 flex items-center justify-center rounded text-slate-600 hover:bg-white hover:shadow-xs text-xs"><i class="fa-solid fa-chevron-left"></i></button>
+                  <button onclick="changeMonth(1)" class="w-7 h-7 flex items-center justify-center rounded text-slate-600 hover:bg-white hover:shadow-xs text-xs"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <div class="flex items-center bg-slate-100 p-1 rounded-lg text-xs font-medium text-slate-600 border border-slate-200">
+                  <button class="view-toggle px-2.5 py-1 rounded-md transition text-slate-500 hover:text-slate-800" onclick="toggleView(this, 'minggu')">Minggu ini</button>
+                  <button class="view-toggle px-2.5 py-1 rounded-md bg-white text-blue-600 shadow-xs font-semibold transition" onclick="toggleView(this, 'bulan')">Bulan ini</button>
+                </div>
+
+                <button onclick="openModal('createScheduleModal')" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm shadow-blue-600/20 transition">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                  <span>Buat Jadwal</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Grid Layout for Calendar Matrix -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+              <div class="md:col-span-7">
+                <div class="grid grid-cols-7 text-center text-[11px] font-bold text-slate-400 mb-2">
+                  <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-1 text-center text-xs" id="calendarDaysGrid">
+                  <div class="py-2 text-slate-300 font-medium">26</div>
+                  <div class="py-2 text-slate-300 font-medium">27</div>
+                  <div class="py-2 text-slate-300 font-medium">28</div>
+                  <div class="py-2 text-slate-300 font-medium">29</div>
+                  <div class="py-2 text-slate-300 font-medium">30</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(1)">1</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(2)">2</div>
+
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(3)">3</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(4)">4</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(5)">5</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(6)">
+                    6<span class="w-1 h-1 bg-amber-500 rounded-full mx-auto block mt-0.5"></span>
+                  </div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(7)">7</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(8)">8</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(9)">9</div>
+
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(10)">10</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(11)">11</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(12)">12</div>
+                  
+                  <div class="py-2 rounded-lg bg-blue-600 text-white font-bold cursor-pointer shadow-md shadow-blue-500/30 ring-2 ring-blue-300" id="dateCell13" onclick="selectDate(13)">
+                    13<span class="w-1.5 h-1.5 bg-amber-300 rounded-full mx-auto block mt-0.5"></span>
+                  </div>
+                  
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(14)">
+                    14<span class="w-1 h-1 bg-blue-500 rounded-full mx-auto block mt-0.5"></span>
+                  </div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(15)">
+                    15<span class="w-1 h-1 bg-emerald-500 rounded-full mx-auto block mt-0.5"></span>
+                  </div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(16)">16</div>
+
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(17)">17</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(18)">
+                    18<span class="w-1 h-1 bg-purple-500 rounded-full mx-auto block mt-0.5"></span>
+                  </div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(19)">19</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(20)">20</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(21)">21</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(22)">22</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(23)">23</div>
+
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(24)">24</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(25)">25</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(26)">26</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(27)">27</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(28)">28</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(29)">29</div>
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(30)">30</div>
+
+                  <div class="py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100 cursor-pointer relative" onclick="selectDate(31)">31</div>
+                  <div class="py-2 text-slate-300 font-medium">1</div>
+                  <div class="py-2 text-slate-300 font-medium">2</div>
+                  <div class="py-2 text-slate-300 font-medium">3</div>
+                  <div class="py-2 text-slate-300 font-medium">4</div>
+                  <div class="py-2 text-slate-300 font-medium">5</div>
+                  <div class="py-2 text-slate-300 font-medium">6</div>
+                </div>
+
+                <div class="flex items-center gap-3 mt-3 pt-3 border-t border-slate-100 text-[10px] text-slate-500 flex-wrap">
+                  <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Input Data IKH</span>
+                  <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Monitoring MSU</span>
+                  <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Verifikasi</span>
+                  <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Adminduk</span>
+                </div>
+              </div>
+
+              <!-- Selected Day Details Card -->
+              <div class="md:col-span-5 bg-slate-50 rounded-xl p-4 border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <div>
+                      <div class="text-xs font-bold text-slate-800" id="selectedDateTitle">Rabu, 13 Mei 2026</div>
+                      <div class="text-[11px] text-blue-600 font-semibold" id="selectedDateBadge">4 Kegiatan Terjadwal</div>
+                    </div>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">Hari Ini</span>
+                  </div>
+
+                  <div class="space-y-2.5">
+                    <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-2xs hover:border-blue-300 transition">
+                      <div class="flex items-start gap-2.5">
+                        <div class="w-7 h-7 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 text-xs">
+                          <i class="fa-solid fa-file-pen"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="text-xs font-bold text-slate-800 truncate">Input Data Lapangan</div>
+                          <div class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                            <i class="fa-regular fa-clock text-[10px]"></i> 08.30 - 10.00 WITA
+                          </div>
+                        </div>
+                        <span class="text-[10px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">IKH</span>
+                      </div>
+                    </div>
+
+                    <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-2xs hover:border-emerald-300 transition">
+                      <div class="flex items-start gap-2.5">
+                        <div class="w-7 h-7 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-xs">
+                          <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="text-xs font-bold text-slate-800 truncate">Verifikasi Data IKH</div>
+                          <div class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                            <i class="fa-regular fa-clock text-[10px]"></i> 10.30 - 12.00 WITA
+                          </div>
+                        </div>
+                        <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">Verif</span>
+                      </div>
+                    </div>
+
+                    <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-2xs hover:border-amber-300 transition">
+                      <div class="flex items-start gap-2.5">
+                        <div class="w-7 h-7 rounded-md bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 text-xs">
+                          <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="text-xs font-bold text-slate-800 truncate">Monitoring MSU</div>
+                          <div class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                            <i class="fa-regular fa-clock text-[10px]"></i> 13.30 - 15.00 WITA
+                          </div>
+                        </div>
+                        <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">Armada</span>
+                      </div>
+                    </div>
+
+                    <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-2xs hover:border-purple-300 transition">
+                      <div class="flex items-start gap-2.5">
+                        <div class="w-7 h-7 rounded-md bg-purple-100 text-purple-700 flex items-center justify-center shrink-0 text-xs">
+                          <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="text-xs font-bold text-slate-800 truncate">Update Data Penduduk</div>
+                          <div class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                            <i class="fa-regular fa-clock text-[10px]"></i> 15.30 - 16.45 WITA
+                          </div>
+                        </div>
+                        <span class="text-[10px] font-semibold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded">Dukcapil</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2.5 border-t border-slate-200/80">
+                  <button onclick="openModal('activityDetailModal')" class="w-full py-2 text-center text-xs font-semibold text-blue-600 hover:text-blue-700 hover:bg-white rounded-lg transition border border-transparent hover:border-blue-200">
+                    Buka Agenda Hari Ini <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px]"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- BOTTOM SECTION: JADWAL MENDATANG -->
+          <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Jadwal Mendatang</h3>
+                <p class="text-xs text-slate-500">Agenda koordinasi lapangan dan input data dalam 7 hari ke depan.</p>
+              </div>
+              <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">3 Agenda Penting</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-blue-300 hover:shadow-xs transition bg-white">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-14 h-14 rounded-xl bg-blue-50 border border-blue-100 flex flex-col items-center justify-center text-center shrink-0">
+                    <span class="text-[11px] font-bold text-blue-600 uppercase leading-tight">Kam</span>
+                    <span class="text-lg font-extrabold text-blue-900 leading-tight">14</span>
+                    <span class="text-[9px] text-blue-500 font-medium leading-tight">Mei</span>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="text-sm font-bold text-slate-900">Bimtek Instrumen IKH &amp; Literasi Digital</span>
+                      <span class="text-[10px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-md">Prioritas</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-slate-500">
+                      <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-[11px]"></i> 09.00 - 12.00 WITA</span>
+                      <span>•</span>
+                      <span class="flex items-center gap-1"><i class="fa-solid fa-location-dot text-[11px]"></i> Aula Kec. Malinau Kota</span>
+                    </div>
+                  </div>
+                </div>
+                <button onclick="viewScheduleDetail('Bimtek Instrumen IKH', 'Kamis, 14 Mei 2026', '09.00 - 12.00 WITA', 'Prioritas Tinggi')" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg border border-slate-200 transition">
+                  Lihat Detail
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-amber-300 hover:shadow-xs transition bg-white">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-14 h-14 rounded-xl bg-amber-50 border border-amber-100 flex flex-col items-center justify-center text-center shrink-0">
+                    <span class="text-[11px] font-bold text-amber-600 uppercase leading-tight">Jum</span>
+                    <span class="text-lg font-extrabold text-amber-900 leading-tight">15</span>
+                    <span class="text-[9px] text-amber-500 font-medium leading-tight">Mei</span>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="text-sm font-bold text-slate-900">Pemberangkatan MSU Tim Darat ke Desa Long Bisai</span>
+                      <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md">MSU</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-slate-500">
+                      <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-[11px]"></i> 08.00 - 16.00 WITA</span>
+                      <span>•</span>
+                      <span class="flex items-center gap-1"><i class="fa-solid fa-truck-medical text-[11px]"></i> Armada 4x4 Reg. III</span>
+                    </div>
+                  </div>
+                </div>
+                <button onclick="viewScheduleDetail('Pemberangkatan MSU Tim Darat', 'Jumat, 15 Mei 2026', '08.00 - 16.00 WITA', 'Operasional MSU')" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg border border-slate-200 transition">
+                  Lihat Detail
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 hover:border-blue-300 hover:shadow-xs transition bg-white">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-14 h-14 rounded-xl bg-purple-50 border border-purple-100 flex flex-col items-center justify-center text-center shrink-0">
+                    <span class="text-[11px] font-bold text-purple-600 uppercase leading-tight">Sen</span>
+                    <span class="text-lg font-extrabold text-purple-900 leading-tight">18</span>
+                    <span class="text-[9px] text-purple-500 font-medium leading-tight">Mei</span>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="text-sm font-bold text-slate-900">Validasi Data Indikator Telekomunikasi &amp; Sinyal 4G</span>
+                      <span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">Input Data</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-slate-500">
+                      <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-[11px]"></i> 13.00 - 15.30 WITA</span>
+                      <span>•</span>
+                      <span class="flex items-center gap-1"><i class="fa-solid fa-tower-broadcast text-[11px]"></i> Daring / Portal IKH</span>
+                    </div>
+                  </div>
+                </div>
+                <button onclick="viewScheduleDetail('Validasi Indikator Telekomunikasi', 'Senin, 18 Mei 2026', '13.00 - 15.30 WITA', 'Verifikasi Indikator')" class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg border border-slate-200 transition">
+                  Lihat Detail
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="lg:col-span-5 space-y-6">
+
+          <!-- CARD 1: PENGINGAT SAYA -->
+          <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Pengingat Saya</h3>
+                <p class="text-xs text-slate-500">Tugas penyerahan wajib sebelum batas waktu evaluasi.</p>
+              </div>
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+            </div>
+
+            <div class="space-y-3.5">
+              <div class="p-3.5 bg-rose-50/60 rounded-xl border border-rose-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-bold text-slate-900">Verifikasi Data IKH Kecamatan</span>
+                  <span class="text-[10px] font-bold bg-rose-600 text-white px-2 py-0.5 rounded-full shadow-2xs">Hari Ini</span>
+                </div>
+                <p class="text-[11px] text-slate-600 mb-3">Tinjau kesesuaian 4 indikator kesiapan sebelum disinkronkan ke Dasbor Nasional.</p>
+                <div class="flex items-center justify-between pt-2 border-t border-rose-200/60">
+                  <span class="text-[10px] text-rose-700 font-medium"><i class="fa-regular fa-clock mr-1"></i>Batas: 17.00 WITA</span>
+                  <button onclick="submitTask('Verifikasi Data IKH Kecamatan')" class="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold transition shadow-xs">
+                    Kirim Verifikasi
+                  </button>
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-amber-50/60 rounded-xl border border-amber-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-bold text-slate-900">Input Data Lapangan Desa Long Bawan</span>
+                  <span class="text-[10px] font-bold bg-amber-500 text-white px-2 py-0.5 rounded-full">Besok</span>
+                </div>
+                <p class="text-[11px] text-slate-600 mb-3">Pengisian formulir keterjangkauan sinyal seluler dan kondisi demografi rentan.</p>
+                <div class="flex items-center justify-between pt-2 border-t border-amber-200/60">
+                  <span class="text-[10px] text-amber-800 font-medium"><i class="fa-regular fa-calendar-check mr-1"></i>14 Mei 2026</span>
+                  <button onclick="submitTask('Input Data Lapangan Desa Long Bawan')" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold transition shadow-xs">
+                    Input Sekarang
+                  </button>
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-bold text-slate-900">Update Data Kelompok Rentan</span>
+                  <span class="text-[10px] font-bold bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">7 Hari Lagi</span>
+                </div>
+                <p class="text-[11px] text-slate-600 mb-3">Pembaruan data lansia dan disabilitas terisolasi untuk penyesuaian rute MSU.</p>
+                <div class="flex items-center justify-between pt-2 border-t border-slate-200">
+                  <span class="text-[10px] text-slate-500 font-medium"><i class="fa-regular fa-calendar mr-1"></i>20 Mei 2026</span>
+                  <button onclick="submitTask('Update Data Kelompok Rentan')" class="px-3 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-xs font-semibold transition">
+                    Buka Form
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2: RINGKASAN KEPATUHAN -->
+          <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Ringkasan Kepatuhan Jadwal</h3>
+                <p class="text-xs text-slate-500">Performa penyelesaian agenda rutin di Kecamatan Malinau Kota.</p>
+              </div>
+              <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">Kategori Baik</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mb-5">
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-center">
+                <div class="text-xl font-extrabold text-slate-800">18</div>
+                <div class="text-[10px] font-semibold text-slate-500 mt-0.5">Total Jadwal</div>
+              </div>
+              <div class="bg-emerald-50/60 rounded-xl p-3 border border-emerald-200 text-center">
+                <div class="text-xl font-extrabold text-emerald-700">12</div>
+                <div class="text-[10px] font-semibold text-emerald-800 mt-0.5">Selesai</div>
+              </div>
+              <div class="bg-blue-50/60 rounded-xl p-3 border border-blue-200 text-center">
+                <div class="text-xl font-extrabold text-blue-700">6</div>
+                <div class="text-[10px] font-semibold text-blue-800 mt-0.5">Akan Datang</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between text-xs mb-1.5">
+                <span class="font-bold text-slate-700">Tingkat Kepatuhan Jadwal</span>
+                <span class="font-extrabold text-emerald-600 text-sm">66.7%</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                <div class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 66.7%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-slate-400 mt-2">
+                <span>Target Standar Kemendagri: 65%</span>
+                <span class="text-emerald-700 font-semibold">+1.7% Di Atas Target</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3: PENGINGAT PENGIRIMAN DATA BULANAN -->
+          <div class="bg-gradient-to-br from-[#0b1329] to-[#0f172a] rounded-2xl p-6 shadow-md text-white relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-blue-600/20 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="flex items-start justify-between relative z-10 mb-4">
+              <div>
+                <span class="text-[10px] uppercase font-bold tracking-wider text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">Periode Mei 2026</span>
+                <h4 class="text-base font-bold text-white mt-1.5">Pengiriman Data Bulanan IKH</h4>
+                <p class="text-xs text-slate-300 mt-0.5">Sinkronisasi data agregat 4 pilar kesiapan wilayah.</p>
+              </div>
+
+              <div class="relative w-16 h-16 flex items-center justify-center shrink-0">
+                <svg class="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                  <path class="text-slate-700" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                  <path class="text-amber-400" stroke-dasharray="58, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                </svg>
+                <div class="absolute flex flex-col items-center justify-center text-center">
+                  <span class="text-xs font-extrabold text-white leading-none">18</span>
+                  <span class="text-[8px] text-amber-300 font-medium">Hari</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-800/60 rounded-xl p-3 border border-slate-700/80 mb-4 text-xs text-slate-300 relative z-10">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm"></i>
+                <div>
+                  <span class="font-semibold text-white">Batas Akhir: 31 Mei 2026</span>
+                  <div class="text-[11px] text-slate-400">Pastikan seluruh 4 indikator penilaian IKH terverifikasi.</div>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="submitMonthlyData()" class="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs tracking-wide shadow-md shadow-blue-500/30 flex items-center justify-center gap-2 transition relative z-10">
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+              <span>Kirim Data Sekarang</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div id="createScheduleModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-calendar-plus text-blue-600"></i> Buat Agenda Jadwal Baru
+        </h3>
+        <button onclick="closeModal('createScheduleModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleCreateSchedule(event)" class="mt-4 space-y-3.5 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Nama Kegiatan</label>
+          <input type="text" id="schedTitle" required="" placeholder="Contoh: Monev Sinyal BTS Desa Long Loreh" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 text-xs">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Kategori</label>
+            <select id="schedCategory" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 text-xs">
+              <option>Input Data IKH</option>
+              <option>Mobile Service Unit (MSU)</option>
+              <option>Verifikasi Data</option>
+              <option>Layanan Adminduk</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Tanggal</label>
+            <input type="date" value="2026-05-19" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 text-xs">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Waktu Mulai</label>
+            <input type="time" value="09:00" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 text-xs">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Prioritas</label>
+            <select class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 text-xs">
+              <option>Prioritas Tinggi</option>
+              <option>Sedang</option>
+              <option>Rutin</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Lokasi / Keterangan</label>
+          <textarea rows="2" placeholder="Tuliskan desa target atau petugas yang bertanggung jawab..." class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 text-xs"></textarea>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeModal('createScheduleModal')" class="px-3.5 py-1.5 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold">Batal</button>
+          <button type="submit" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs">Simpan Jadwal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="activityDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div>
+          <span class="text-[10px] font-bold text-blue-600 uppercase">Informasi Rinci Jadwal</span>
+          <h3 class="text-base font-bold text-slate-800" id="modalDetailTitle">Agenda LENTERA</h3>
+        </div>
+        <button onclick="closeModal('activityDetailModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="py-4 space-y-3 text-xs">
+        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+          <span class="text-slate-500">Waktu Pelaksanaan</span>
+          <span class="font-bold text-slate-800" id="modalDetailTime">Rabu, 13 Mei 2026 • 08.30 WITA</span>
+        </div>
+        <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+          <span class="text-slate-500">Klasifikasi / Tag</span>
+          <span class="font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded" id="modalDetailTag">Prioritas Utama</span>
+        </div>
+        <p class="text-slate-600 leading-relaxed" id="modalDetailDesc">
+          Kegiatan ini bertujuan untuk mempercepat sinkronisasi data kesiapan infrastruktur dan layanan adminduk di tingkat kecamatan agar terintegrasi dengan modul Pengukuran IKH.
+        </p>
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+        <a href="index.html" class="text-xs font-semibold text-blue-600 hover:underline flex items-center gap-1">
+          <i class="ph ph-sliders"></i> Buka Pengukuran IKH
+        </a>
+        <button onclick="closeModal('activityDetailModal')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3 text-xs">
+      <i class="fa-solid fa-circle-check text-emerald-400 text-sm" id="toastIcon"></i>
+      <span id="toastMessage">Pesan notifikasi</span>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    function showToast(msg, isSuccess = true) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+      
+      toastMsg.innerText = msg;
+      toastIcon.className = isSuccess ? "fa-solid fa-circle-check text-emerald-400 text-sm" : "fa-solid fa-triangle-exclamation text-amber-400 text-sm";
+      
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    function switchModule(target) {
+      if (target === 'ikh') {
+        window.location.href = 'index.html';
+      }
+    }
+
+    function syncCalendar() {
+      const icon = document.getElementById('syncIcon');
+      icon.classList.add('fa-spin');
+      showToast('Menyinkronkan dengan Google Calendar & SIMPEG Kemendagri...');
+      setTimeout(() => {
+        icon.classList.remove('fa-spin');
+        showToast('Sinkronisasi kalender selesai! 4 agenda baru terhubung.');
+      }, 1500);
+    }
+
+    let currentMonthIndex = 4;
+    const months = ["Januari 2026", "Februari 2026", "Maret 2026", "April 2026", "Mei 2026", "Juni 2026", "Juli 2026"];
+    function changeMonth(delta) {
+      currentMonthIndex = Math.max(0, Math.min(months.length - 1, currentMonthIndex + delta));
+      document.getElementById('currentMonthYear').innerText = months[currentMonthIndex];
+      showToast('Menampilkan agenda untuk ' + months[currentMonthIndex]);
+    }
+
+    function setSubTab(btn, mode) {
+      document.querySelectorAll('.sub-tab').forEach(b => {
+        b.className = 'sub-tab px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900';
+      });
+      btn.className = 'sub-tab px-4 py-1.5 rounded-lg text-xs font-bold bg-white text-blue-600 shadow-xs';
+      showToast('Tampilan diperbarui');
+    }
+
+    function toggleView(btn, viewType) {
+      document.querySelectorAll('.view-toggle').forEach(b => {
+        b.className = 'view-toggle px-2.5 py-1 rounded-md transition text-slate-500 hover:text-slate-800';
+      });
+      btn.className = 'view-toggle px-2.5 py-1 rounded-md bg-white text-blue-600 shadow-xs font-semibold transition';
+      showToast('Mode tampilan diubah ke: ' + (viewType === 'minggu' ? 'Mingguan' : 'Bulanan'));
+    }
+
+    function selectDate(day) {
+      const dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      const dateObj = new Date(2026, 4, day);
+      const dayName = dayNames[dateObj.getDay()];
+
+      document.getElementById('selectedDateTitle').innerText = `${dayName}, ${day} Mei 2026`;
+      showToast(`Menampilkan detail jadwal untuk ${dayName}, ${day} Mei 2026`);
+    }
+
+    function viewScheduleDetail(title, time, hours, tag) {
+      document.getElementById('modalDetailTitle').innerText = title;
+      document.getElementById('modalDetailTime').innerText = `${time} • ${hours}`;
+      document.getElementById('modalDetailTag').innerText = tag;
+      openModal('activityDetailModal');
+    }
+
+    function submitTask(taskName) {
+      showToast(`Tugas "${taskName}" berhasil diproses dan dikirim ke sistem verifikasi.`);
+    }
+
+    function submitMonthlyData() {
+      showToast('Data IKH bulanan Mei 2026 berhasil disinkronkan ke Dasbor Nasional Kemendagri!');
+    }
+
+    function handleCreateSchedule(e) {
+      e.preventDefault();
+      const title = document.getElementById('schedTitle').value;
+      closeModal('createScheduleModal');
+      showToast(`Jadwal baru "${title}" berhasil ditambahkan ke kalender!`);
+    }
+  </script>
+</body>
+</html>

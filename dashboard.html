@@ -1,0 +1,1835 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LENTERA - Layanan Ekosistem Nusantara: Terpadu, Responsif, dan Adaptif</title>
+<!-- Tailwind CSS v3 with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Phosphor Icons for rich dashboard aesthetics -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/thin/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/light/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/duotone/style.css">
+<!-- Tailwind Configuration -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lentera: {
+              navy: '#0b1329',
+              dark: '#0f172a',
+              card: '#131e3a',
+              primary: '#2563eb',
+              accent: '#f59e0b',
+              gold: '#d97706',
+              surface: '#f8fafc',
+              border: '#e2e8f0',
+              manual: '#ea580c',
+              campuran: '#0284c7',
+              digital: '#16a34a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles: Animations & Map Transform -->
+<style data-purpose="custom-animations">
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.45)); }
+      50% { filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.8)); }
+    }
+    .glow-lantern {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .map-svg-node {
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .map-svg-node:hover {
+      filter: brightness(1.2) drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      transform-origin: center;
+    }
+    .donut-slice {
+      transition: stroke-dasharray 0.5s ease, stroke-width 0.2s ease, opacity 0.3s ease;
+      cursor: pointer;
+    }
+    .donut-slice:hover {
+      stroke-width: 32;
+    }
+    /* Scroll margin to offset fixed sticky navbar */
+    .section-scroll-target {
+      scroll-margin-top: 6.5rem;
+    }
+    .shortcut-pill {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .shortcut-pill:hover {
+      transform: translateY(-1px);
+    }
+    .shortcut-pill:active {
+      transform: scale(0.97);
+    }
+    .shortcut-pill.active {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+      border-color: #2563eb !important;
+      box-shadow: 0 4px 12px -1px rgba(37, 99, 235, 0.35);
+    }
+    .shortcut-pill.active i,
+    .shortcut-pill.active span.icon-badge {
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+<body class="bg-[#f3f6fb] text-slate-800 font-sans antialiased overflow-x-hidden min-h-screen flex">
+<!-- BEGIN: Sidebar -->
+<aside class="w-72 bg-[#0b1329] text-white flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-30 min-h-screen sticky top-0 shadow-2xl" id="main-sidebar">
+<!-- Top Branding & Navigation -->
+<div class="p-6">
+<!-- Logo Lentera -->
+<div class="flex items-center space-x-3.5 mb-8">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/5 border border-amber-400/30 flex items-center justify-center p-2 shadow-inner glow-lantern">
+<!-- Stylized Lantern Icon SVG -->
+<svg class="w-full h-full" fill="none" viewBox="0 0 64 64">
+<path d="M22 14h20l4 8H18l4-8z" fill="#f59e0b" fill-opacity="0.9"></path>
+<path d="M18 22h28l-5 30H23L18 22z" fill="#fbbf24" fill-opacity="0.3" stroke="#f59e0b" stroke-width="2"></path>
+<circle class="animate-ping" cx="32" cy="34" fill="#fef08a" r="7" style="animation-duration: 3s; opacity: 0.7;"></circle>
+<circle cx="32" cy="34" fill="#fff" r="5"></circle>
+<path d="M23 52h18v4H23v-4z" fill="#d97706"></path>
+<path d="M32 6v8M26 6h12" stroke="#f59e0b" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<div>
+<h1 class="font-extrabold tracking-wider text-xl leading-tight bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-white to-amber-400">
+            LENTERA
+          </h1>
+<p class="text-[10px] text-slate-400 font-medium tracking-tight leading-tight mt-0.5">
+            Layanan Ekosistem Nusantara:<br><span class="text-amber-400/80">Terpadu, Responsif, &amp; Adaptif</span>
+</p>
+</div>
+</div>
+<!-- Navigation Menu -->
+<!-- Navigation Menu di dashboard.html -->
+<nav aria-label="Menu Utama" class="space-y-1.5">
+  <!-- 1. Beranda (Halaman Ini) -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white font-medium shadow-md shadow-blue-600/30 transition" href="dashboard.html">
+    <i class="ph ph-house text-xl"></i>
+    <span class="text-sm font-semibold">Beranda</span>
+  </a>
+
+  <!-- 2. Indeks Kesiapan Hybrid -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="index.html">
+    <i class="ph ph-chart-bar group-hover:text-amber-400 transition text-xl"></i>
+    <span class="text-sm">Indeks Kesiapan Hybrid</span>
+  </a>
+
+  <!-- 3. Paket Layanan -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="#paket-layanan" onclick="showToast('Navigasi: Katalog Paket Layanan')">
+    <i class="ph ph-package group-hover:text-amber-400 transition text-xl"></i>
+    <span class="text-sm">Paket Layanan</span>
+  </a>
+
+  <!-- 4. Mobile Service Unit -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="#mobile-service" onclick="toggleMSUDrawer(true)">
+    <i class="ph ph-truck group-hover:text-amber-400 transition text-xl"></i>
+    <span class="text-sm">Mobile Service Unit</span>
+    <span class="ml-auto text-[10px] bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-500/30">18 Armada</span>
+  </a>
+
+  <!-- 5. Deteksi Dini & Pengawasan -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="#deteksi-dini-menu" onclick="scrollToSection('deteksi-dini'); return false;">
+    <i class="ph ph-shield-check group-hover:text-amber-400 transition text-xl"></i>
+    <span class="text-sm">Deteksi Dini &amp; Pengawasan</span>
+    <span class="w-2 h-2 rounded-full bg-rose-500 ml-auto animate-pulse"></span>
+  </a>
+
+  <!-- 6. Jadwal & Reminder (ITEM BARU DITERAPKAN DENGAN CONNECTOR LINK) -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="jadwal-kegiatan.html">
+    <i class="ph ph-calendar-blank group-hover:text-amber-400 transition text-xl"></i>
+    <span class="text-sm">Jadwal &amp; Reminder</span>
+    <span class="ml-auto text-[10px] bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">4 Agenda</span>
+  </a>
+
+  <!-- 7. Data & Peta -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="#data-peta" onclick="scrollToSection('peta-nusantara'); return false;">
+    <i class="ph ph-map-trifold group-hover:text-amber-400 transition text-xl"></i>
+    <span id="data-peta" class="text-sm">Data &amp; Peta</span>
+  </a>
+
+  <!-- 8. Laporan & Analitik -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="#laporan-analitik" onclick="showToast('Navigasi: Laporan &amp; Analitik Dukcapil')">
+    <i class="ph ph-file-text group-hover:text-amber-400 transition text-xl"></i>
+    <span class="text-sm">Laporan &amp; Analitik</span>
+  </a>
+
+  <!-- 9. Pengaturan -->
+  <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="#pengaturan" onclick="showToast('Navigasi: Pengaturan Sistem')">
+    <i class="ph ph-gear group-hover:text-amber-400 transition text-xl"></i>
+    <span class="text-sm">Pengaturan</span>
+  </a>
+</nav></div>
+<!-- Bottom: Card Filosofi Lentera -->
+<div class="p-5 m-4 rounded-2xl bg-gradient-to-b from-[#142247] to-[#0d162e] border border-blue-900/40 relative overflow-hidden group">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-amber-500/20 transition"></div>
+<div class="flex items-center gap-3 mb-2.5">
+<div class="p-2 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30">
+<i class="ph ph-lamp-charge text-xl"></i>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest text-amber-400">Filosofi LENTERA</span>
+</div>
+<p class="text-[12px] text-slate-300 italic leading-relaxed">
+        "Menghadirkan cahaya kebijakan hingga ke wilayah yang selama ini luput dari rerata statistik nasional."
+      </p>
+<div class="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online v2.4</span>
+<button class="text-blue-400 hover:text-amber-300 font-semibold transition" onclick="showToast('Panduan Kebijakan Filosofi LENTERA Terbuka')">Selengkapnya →</button>
+</div>
+</div>
+</aside>
+<!-- END: Sidebar -->
+<!-- BEGIN: MainContent -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- Top Navbar Header -->
+<header class="h-20 bg-white border-b border-slate-200/80 px-8 flex items-center justify-between sticky top-0 z-20 shadow-sm backdrop-blur-md bg-white/95">
+<!-- Left Action: Toggle Sidebar & Portal Tag -->
+<div class="flex items-center space-x-5">
+<button class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition" id="sidebar-toggle">
+<i class="ph ph-list text-xl"></i>
+</button>
+<div class="hidden sm:flex items-center space-x-2.5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200/70">
+<span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+            Portal Nasional SPBE Inklusif
+          </span>
+<span class="text-xs text-slate-400">|</span>
+<span class="text-xs text-slate-500 font-medium">Ditjen Dukcapil &amp; Bina Pemdes</span>
+</div>
+</div>
+<!-- Right Action: Notifications & Profile -->
+<div class="flex items-center space-x-5">
+<!-- Search trigger -->
+<button class="hidden md:flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-500 text-xs border border-transparent hover:border-slate-300 transition" onclick="showToast('Ketik kata kunci untuk mencari desa atau kabupaten...')">
+<i class="ph ph-magnifying-glass text-sm"></i>
+<span>Cari Kabupaten / Desa...</span>
+<kbd class="px-1.5 py-0.5 bg-white rounded border border-slate-200 text-[10px] text-slate-400">⌘K</kbd>
+</button>
+<!-- Notification Bell -->
+<div class="relative">
+<button class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 relative transition" onclick="openSOPModal(1)">
+<i class="ph ph-bell-simple text-xl"></i>
+<span class="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
+              3
+            </span>
+</button>
+</div>
+<!-- Profile Widget -->
+<div class="flex items-center space-x-3 pl-2 border-l border-slate-200">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-md ring-2 ring-blue-100">
+            AL
+          </div>
+<div class="hidden lg:block text-left">
+<p class="text-xs font-bold text-slate-800 leading-tight">Admin LENTERA</p>
+<p class="text-[11px] text-slate-500">Kementerian Dalam Negeri</p>
+</div>
+<button class="text-slate-400 hover:text-slate-700 text-xs pl-1" onclick="showToast('Menu Profil: Keluar atau Konfigurasi Akun')">
+<i class="ph ph-caret-down"></i>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Body Container -->
+<main class="flex-1 p-8 max-w-7xl w-full mx-auto space-y-7">
+<!-- Welcome & Context Header -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+            Selamat datang, Admin LENTERA <span class="inline-block animate-bounce">👋</span>
+</h2>
+<p class="text-sm text-slate-500 mt-1">
+            Kelola data, pantau layanan, dan wujudkan keadilan pelayanan di seluruh Nusantara.
+          </p>
+</div>
+<!-- Date & Export Fast Actions -->
+<div class="flex items-center space-x-3">
+<div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm text-xs font-semibold text-slate-700">
+<i class="ph ph-calendar text-blue-600 text-base"></i>
+<span id="current-date-text">29 Juli 2025</span>
+<i class="ph ph-caret-down text-slate-400 text-xs"></i>
+</div>
+<button class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-sm transition flex items-center gap-2" onclick="triggerDataExport()">
+<i class="ph ph-download-simple"></i>
+<span>Export Rekap</span>
+</button>
+</div>
+</section>
+<!-- Fast Navigation Pills (Prominent Shortcut Bar) -->
+<nav aria-label="Pintasan Cepat Dashboard" class="bg-white/80 backdrop-blur-md p-2.5 rounded-2xl border border-slate-200/90 shadow-sm">
+<div class="flex items-center gap-2 overflow-x-auto custom-scrollbar py-0.5" id="shortcut-nav-container">
+<div class="flex items-center gap-1.5 text-slate-400 font-semibold px-2.5 shrink-0 text-xs uppercase tracking-wider">
+<i class="ph ph-compass text-sm text-blue-600"></i>
+<span>Pintasan:</span>
+</div>
+<!-- Pill 1: Indikator Utama -->
+<button class="shortcut-pill active inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200/90 text-slate-700 font-semibold text-xs whitespace-nowrap shadow-xs hover:border-blue-500 hover:text-blue-700 transition" data-target="indikator-utama" id="pill-indikator-utama" onclick="scrollToSection('indikator-utama')">
+<i class="ph ph-chart-line-up text-blue-600 text-base"></i>
+<span>Indikator Utama</span>
+</button>
+<!-- Pill 2: Peta Nusantara -->
+<button class="shortcut-pill inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200/90 text-slate-700 font-semibold text-xs whitespace-nowrap shadow-xs hover:border-blue-500 hover:text-blue-700 transition" data-target="peta-nusantara" id="pill-peta-nusantara" onclick="scrollToSection('peta-nusantara')">
+<i class="ph ph-map-trifold text-teal-600 text-base"></i>
+<span>Peta Nusantara</span>
+</button>
+<!-- Pill 3: Daerah Prioritas -->
+<button class="shortcut-pill inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200/90 text-slate-700 font-semibold text-xs whitespace-nowrap shadow-xs hover:border-blue-500 hover:text-blue-700 transition" data-target="daerah-prioritas" id="pill-daerah-prioritas" onclick="scrollToSection('daerah-prioritas')">
+<i class="ph ph-warning-octagon text-amber-500 text-base"></i>
+<span>Daerah Prioritas</span>
+</button>
+<!-- Pill 4: Monitoring Armada MSU -->
+<button class="shortcut-pill inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200/90 text-slate-700 font-semibold text-xs whitespace-nowrap shadow-xs hover:border-blue-500 hover:text-blue-700 transition" data-target="ringkasan-msu" id="pill-ringkasan-msu" onclick="scrollToSection('ringkasan-msu')">
+<i class="ph ph-truck text-sky-600 text-base"></i>
+<span>Monitoring Armada MSU</span>
+<span class="text-[10px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded-full">18 Armada</span>
+</button>
+<!-- Pill 5: Deteksi Dini -->
+<button class="shortcut-pill inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200/90 text-slate-700 font-semibold text-xs whitespace-nowrap shadow-xs hover:border-rose-400 hover:text-rose-700 transition" data-target="deteksi-dini" id="pill-deteksi-dini" onclick="scrollToSection('deteksi-dini')">
+<i class="ph ph-bell-ringing text-rose-500 text-base"></i>
+<span>Deteksi Dini</span>
+<span class="text-[10px] bg-rose-100 text-rose-700 font-bold px-1.5 py-0.5 rounded-full border border-rose-200/70">3 Alert</span>
+</button>
+</div>
+</nav>
+<!-- BEGIN: Dynamic KPI Grid (5 Cards) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 section-scroll-target" data-purpose="kpi-indicator-cards" id="indikator-utama">
+<!-- Card 1: Total Desa Tergabung -->
+<div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition relative overflow-hidden">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-tight">Total Desa Tergabung</span>
+<div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+<i class="ph ph-bank text-xl"></i>
+</div>
+</div>
+<div class="mt-3">
+<h3 class="text-2xl font-black text-slate-900 tracking-tight" id="kpi-total-desa">83.862</h3>
+<p class="text-xs text-blue-600 font-semibold mt-1" id="kpi-total-desc">100% dari total desa</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+</div>
+<!-- Card 2: Rata-rata Indeks Nasional -->
+<div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition relative overflow-hidden">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-tight">Rata-rata Indeks IKH</span>
+<div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+<i class="ph ph-chart-line-up text-xl"></i>
+</div>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline space-x-1">
+<h3 class="text-2xl font-black text-slate-900 tracking-tight" id="kpi-indeks-skor">2,41</h3>
+<span class="text-xs text-slate-400 font-bold">/ 5</span>
+</div>
+<p class="text-xs text-slate-500 mt-1">
+              Kategori: <span class="font-bold text-sky-600" id="kpi-indeks-kategori">Campuran</span>
+</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-emerald-500"></div>
+</div>
+<!-- Card 3: Desa Manual Dominan -->
+<div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition relative overflow-hidden">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-tight">Desa Manual Dominan</span>
+<div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+<i class="ph ph-users-three text-xl"></i>
+</div>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-black text-slate-900 tracking-tight" id="kpi-manual-desa">24.318</h3>
+<span class="text-xs font-bold text-amber-700 bg-amber-100/70 px-1.5 py-0.5 rounded" id="kpi-manual-persen">(29,01%)</span>
+</div>
+<p class="text-xs text-slate-400 mt-1">Butuh dukungan luring/MSU</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-500"></div>
+</div>
+<!-- Card 4: Desa Campuran -->
+<div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition relative overflow-hidden">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-tight">Desa Campuran</span>
+<div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+<i class="ph ph-users text-xl"></i>
+</div>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-black text-slate-900 tracking-tight" id="kpi-campuran-desa">38.765</h3>
+<span class="text-xs font-bold text-sky-700 bg-sky-100/70 px-1.5 py-0.5 rounded" id="kpi-campuran-persen">(46,25%)</span>
+</div>
+<p class="text-xs text-slate-400 mt-1">Layanan hybrid bertahap</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-sky-500"></div>
+</div>
+<!-- Card 5: Desa Digital Dominan -->
+<div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition relative overflow-hidden">
+<div class="flex items-start justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-tight">Desa Digital Dominan</span>
+<div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+<i class="ph ph-user-check text-xl"></i>
+</div>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-2">
+<h3 class="text-2xl font-black text-slate-900 tracking-tight" id="kpi-digital-desa">20.779</h3>
+<span class="text-xs font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded" id="kpi-digital-persen">(24,74%)</span>
+</div>
+<p class="text-xs text-slate-400 mt-1">SPBE terintegrasi mandiri</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
+</div>
+</section>
+<!-- END: Dynamic KPI Grid -->
+<!-- BEGIN: Map & Donut Distribution Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Interactive Indonesia Map Card (Col 8) -->
+<div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs flex flex-col justify-between relative section-scroll-target" id="peta-nusantara">
+<!-- Map Header & Filter Controls -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+<div>
+<h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+<i class="ph ph-map-pin text-blue-600"></i>
+                Peta Klasifikasi Kesiapan Hybrid per Kabupaten/Kota
+              </h3>
+<p class="text-xs text-slate-400 mt-0.5">Pilih wilayah pada peta untuk melihat profil kesiapan dan rekomendasi intervensi.</p>
+</div>
+<!-- Province Dropdown Filter -->
+<div class="flex items-center gap-2">
+<span class="text-xs font-medium text-slate-400">Filter:</span>
+<select class="text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 focus:ring-blue-500 focus:border-blue-500 transition cursor-pointer" id="province-filter" onchange="handleProvinceChange(this.value)">
+<option value="nasional">Semua Provinsi (Nasional)</option>
+<option value="papua">Papua &amp; Papua Pegunungan</option>
+<option value="sumut">Sumatera Utara</option>
+<option value="jabar">Jawa Barat</option>
+<option value="bali">Bali</option>
+<option value="kaltara">Kalimantan Utara</option>
+<option value="sulut">Sulawesi Utara</option>
+</select>
+</div>
+</div>
+<!-- Interactive Map Canvas / SVG Container with Zoom Controls -->
+<div class="relative my-4 min-h-[300px] sm:min-h-[340px] bg-slate-50/70 rounded-xl border border-slate-100 overflow-hidden flex items-center justify-center p-4">
+<!-- Zoom Controls Float -->
+<div class="absolute top-4 left-4 flex flex-col bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden z-10">
+<button class="p-2 hover:bg-slate-100 text-slate-700 border-b border-slate-200 active:bg-slate-200" onclick="zoomMap(1.2)" title="Perbesar Peta">
+<i class="ph ph-plus text-base font-bold"></i>
+</button>
+<button class="p-2 hover:bg-slate-100 text-slate-700 border-b border-slate-200 active:bg-slate-200" onclick="zoomMap(0.8)" title="Perkecil Peta">
+<i class="ph ph-minus text-base font-bold"></i>
+</button>
+<button class="p-2 hover:bg-slate-100 text-slate-700 active:bg-slate-200" onclick="resetMapZoom()" title="Reset Tampilan">
+<i class="ph ph-arrows-clockwise text-base"></i>
+</button>
+</div>
+<!-- Active Map Inspector Card (Popup Info on Island Click) -->
+<div class="hidden absolute top-4 right-4 max-w-xs bg-white/95 backdrop-blur-md p-4 rounded-xl border border-slate-200 shadow-xl z-10 transition-all duration-300" id="island-inspector-card">
+<div class="flex items-center justify-between gap-2 border-b pb-2">
+<span class="font-bold text-sm text-slate-800" id="inspect-daerah">Kabupaten Nias Selatan</span>
+<button class="text-slate-400 hover:text-slate-700" onclick="closeInspectorCard()"><i class="ph ph-x text-sm"></i></button>
+</div>
+<div class="mt-2 text-xs space-y-1">
+<div class="flex justify-between">
+<span class="text-slate-500">Provinsi:</span>
+<span class="font-medium text-slate-700" id="inspect-prov">Sumatera Utara</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-500">Skor IKH:</span>
+<span class="font-bold text-amber-600" id="inspect-skor">1,32 (Manual Dominan)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-500">Rekomendasi:</span>
+<span class="font-semibold text-blue-700" id="inspect-paket">Paket D + Armada MSU</span>
+</div>
+</div>
+<div class="mt-3 pt-2 border-t flex justify-end">
+<button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-1.5 rounded-lg text-xs font-semibold shadow transition" onclick="openScheduleModal(currentSelectedDistrict)">
+                  Jadwalkan MSU 🚀
+                </button>
+</div>
+</div>
+<!-- SVG Archipelago Vector Map Graphic -->
+<div class="w-full h-full flex items-center justify-center transition-transform duration-300 transform scale-100 origin-center select-none" id="map-svg-wrapper">
+<svg class="w-full h-auto max-h-[340px] drop-shadow-sm" fill="none" viewBox="0 0 950 420" xmlns="http://www.w3.org/2000/svg">
+<!-- Pulau Sumatera -->
+<path class="map-svg-node" d="M 70 85 Q 110 50 145 95 Q 170 140 210 185 Q 240 220 270 260 L 260 275 Q 220 250 180 200 Q 140 160 100 120 Z" fill="#ea580c" id="path-sumatera" onclick="inspectRegion('sumut')" stroke="#fff" stroke-width="2">
+<title>Sumatera (Manual &amp; Campuran)</title>
+</path>
+<!-- Kepulauan Nias & Mentawai -->
+<circle class="map-svg-node" cx="85" cy="155" fill="#dc2626" id="node-nias" onclick="inspectRegion('nias')" r="9" stroke="#fff" stroke-width="2">
+<title>Kab. Nias Selatan (1.32 - Manual Dominan)</title>
+</circle>
+<!-- Pulau Jawa & Bali -->
+<path class="map-svg-node" d="M 245 285 Q 310 280 380 290 Q 430 295 480 300 L 485 315 Q 410 315 340 310 Q 280 305 240 295 Z" fill="#0284c7" id="path-jawa" onclick="inspectRegion('jabar')" stroke="#fff" stroke-width="2">
+<title>Pulau Jawa (Campuran)</title>
+</path>
+<!-- Bali & Nusa Tenggara -->
+<path class="map-svg-node" d="M 495 305 L 530 305 L 545 315 L 515 318 Z" fill="#16a34a" id="path-bali" onclick="inspectRegion('bali')" stroke="#fff" stroke-width="1.5">
+<title>Bali (Digital Dominan)</title>
+</path>
+<path class="map-svg-node" d="M 550 310 Q 610 312 660 325 L 655 335 Q 600 325 545 320 Z" fill="#ea580c" id="path-ntt" onclick="inspectRegion('sumba')" stroke="#fff" stroke-width="1.5">
+<title>NTT - Sumba Barat (Manual)</title>
+</path>
+<!-- Pulau Kalimantan -->
+<path class="map-svg-node" d="M 330 130 Q 370 105 410 110 Q 450 140 445 190 Q 430 230 385 240 Q 335 235 320 185 Q 310 150 330 130 Z" fill="#0284c7" id="path-kalimantan" onclick="inspectRegion('kaltara')" stroke="#fff" stroke-width="2">
+<title>Kalimantan (Campuran - Malinau)</title>
+</path>
+<!-- Pulau Sulawesi -->
+<path class="map-svg-node" d="M 505 130 Q 535 125 555 140 Q 535 165 525 180 Q 560 180 575 210 Q 545 220 535 245 Q 515 250 510 220 Q 490 200 500 170 Z" fill="#0284c7" id="path-sulawesi" onclick="inspectRegion('sulut')" stroke="#fff" stroke-width="2">
+<title>Sulawesi (Campuran - Talaud)</title>
+</path>
+<circle class="map-svg-node" cx="575" cy="105" fill="#0284c7" id="node-talaud" onclick="inspectRegion('talaud')" r="7" stroke="#fff" stroke-width="2">
+<title>Kep. Talaud (2.76 - Campuran)</title>
+</circle>
+<!-- Kepulauan Maluku -->
+<path class="map-svg-node" d="M 610 160 Q 640 150 635 180 Q 615 215 620 240 L 605 240 Z" fill="#ea580c" id="path-maluku" onclick="inspectRegion('papua')" stroke="#fff" stroke-width="1.5">
+<title>Maluku</title>
+</path>
+<!-- Pulau Papua -->
+<path class="map-svg-node" d="M 680 180 Q 720 160 760 175 Q 820 175 870 200 L 860 270 Q 800 270 750 250 Q 720 255 700 220 Q 675 200 680 180 Z" fill="#ea580c" id="path-papua" onclick="inspectRegion('papua')" stroke="#fff" stroke-width="2">
+<title>Papua Pegunungan (1.45 - Manual Dominan)</title>
+</path>
+<circle class="map-svg-node" cx="810" cy="235" fill="#dc2626" id="node-pegbintang" onclick="inspectRegion('pegbintang')" r="9" stroke="#fff" stroke-width="2">
+<title>Kab. Pegunungan Bintang (1.45)</title>
+</circle>
+<!-- Geo Grid Lines Decoration -->
+<line opacity="0.6" stroke="#cbd5e1" stroke-dasharray="4 6" stroke-width="1" x1="40" x2="900" y1="200" y2="200"></line>
+<text fill="#94a3b8" font-family="sans-serif" font-size="10" x="50" y="194">Khatulistiwa 0.00°</text>
+</svg>
+</div>
+</div>
+<!-- Bottom Legend Info -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 text-xs">
+<div class="flex items-start space-x-2.5 p-2 rounded-lg hover:bg-slate-50 cursor-pointer" onclick="filterMapByLegend('manual')">
+<span class="w-3.5 h-3.5 rounded-full bg-amber-600 mt-0.5 shrink-0 ring-2 ring-amber-200"></span>
+<div>
+<p class="font-bold text-slate-800">Manual Dominan</p>
+<p class="text-slate-400 text-[11px] leading-tight">Layanan publik masih berbasis manual &amp; luring</p>
+</div>
+</div>
+<div class="flex items-start space-x-2.5 p-2 rounded-lg hover:bg-slate-50 cursor-pointer" onclick="filterMapByLegend('campuran')">
+<span class="w-3.5 h-3.5 rounded-full bg-sky-600 mt-0.5 shrink-0 ring-2 ring-sky-200"></span>
+<div>
+<p class="font-bold text-slate-800">Campuran (Hybrid)</p>
+<p class="text-slate-400 text-[11px] leading-tight">Layanan publik dilakukan secara hybrid adaptif</p>
+</div>
+</div>
+<div class="flex items-start space-x-2.5 p-2 rounded-lg hover:bg-slate-50 cursor-pointer" onclick="filterMapByLegend('digital')">
+<span class="w-3.5 h-3.5 rounded-full bg-emerald-600 mt-0.5 shrink-0 ring-2 ring-emerald-200"></span>
+<div>
+<p class="font-bold text-slate-800">Digital Dominan</p>
+<p class="text-slate-400 text-[11px] leading-tight">Layanan publik sebagian besar telah terdigitalisasi</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Donut Chart & MSU Quick Snapshot (Col 4) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Interactive Donut Card -->
+<div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-base text-slate-800">Distribusi Desa</h3>
+<span class="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md font-semibold">Nasional</span>
+</div>
+<!-- Donut SVG + Legend Layout -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+<!-- Donut Chart Canvas -->
+<div class="relative w-36 h-36 flex items-center justify-center shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<!-- Background circle -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#f1f5f9" stroke-width="22"></circle>
+<!-- Segmen Manual (29.01% -> stroke-dasharray ~ 69.3, circum ~ 238.7) -->
+<circle class="donut-slice" cx="50" cy="50" fill="none" id="donut-manual" onclick="highlightDonutCategory('Manual Dominan', '24.318 Desa', '29,01%')" r="38" stroke="#ea580c" stroke-dasharray="69.3 238.7" stroke-dashoffset="0" stroke-width="22"></circle>
+<!-- Segmen Campuran (46.25% -> stroke-dasharray ~ 110.4) -->
+<circle class="donut-slice" cx="50" cy="50" fill="none" id="donut-campuran" onclick="highlightDonutCategory('Campuran (Hybrid)', '38.765 Desa', '46,25%')" r="38" stroke="#0284c7" stroke-dasharray="110.4 238.7" stroke-dashoffset="-69.3" stroke-width="22"></circle>
+<!-- Segmen Digital (24.74% -> stroke-dasharray ~ 59) -->
+<circle class="donut-slice" cx="50" cy="50" fill="none" id="donut-digital" onclick="highlightDonutCategory('Digital Dominan', '20.779 Desa', '24,74%')" r="38" stroke="#16a34a" stroke-dasharray="59 238.7" stroke-dashoffset="-179.7" stroke-width="22"></circle>
+</svg>
+<!-- Center Text Overlay -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-1">
+<span class="text-[10px] text-slate-400 font-bold uppercase" id="donut-center-title">Total</span>
+<span class="text-xs font-black text-slate-800" id="donut-center-value">83.862</span>
+<span class="text-[9px] text-slate-400" id="donut-center-sub">Desa</span>
+</div>
+</div>
+<!-- Compact Legend List with Interactive Clicks -->
+<div class="space-y-3 w-full text-xs">
+<div class="p-1.5 rounded-lg hover:bg-amber-50/70 cursor-pointer transition" onclick="highlightDonutCategory('Manual Dominan', '24.318 Desa', '29,01%')">
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5 font-medium text-slate-700">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span> Manual
+                    </span>
+<span class="font-bold text-amber-700" id="chart-pct-manual">29,01%</span>
+</div>
+<p class="text-[11px] text-slate-400 pl-4" id="chart-val-manual">24.318 Desa</p>
+</div>
+<div class="p-1.5 rounded-lg hover:bg-sky-50/70 cursor-pointer transition" onclick="highlightDonutCategory('Campuran (Hybrid)', '38.765 Desa', '46,25%')">
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5 font-medium text-slate-700">
+<span class="w-2.5 h-2.5 rounded-full bg-sky-600"></span> Campuran
+                    </span>
+<span class="font-bold text-sky-700" id="chart-pct-campuran">46,25%</span>
+</div>
+<p class="text-[11px] text-slate-400 pl-4" id="chart-val-campuran">38.765 Desa</p>
+</div>
+<div class="p-1.5 rounded-lg hover:bg-emerald-50/70 cursor-pointer transition" onclick="highlightDonutCategory('Digital Dominan', '20.779 Desa', '24,74%')">
+<div class="flex items-center justify-between">
+<span class="flex items-center gap-1.5 font-medium text-slate-700">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> Digital
+                    </span>
+<span class="font-bold text-emerald-700" id="chart-pct-digital">24,74%</span>
+</div>
+<p class="text-[11px] text-slate-400 pl-4" id="chart-val-digital">20.779 Desa</p>
+</div>
+</div>
+</div>
+<p class="text-[11px] text-slate-400 text-center mt-3 pt-2 border-t border-slate-100">
+              *Klik pada segmen grafik untuk melihat highlight indikator
+            </p>
+</div>
+<!-- Mobile Service Unit Quick Stats Summary (Target: ringkasan-msu) -->
+<div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs section-scroll-target" id="ringkasan-msu">
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-bold text-sm text-slate-800 flex items-center gap-1.5">
+<i class="ph ph-truck text-blue-600"></i>
+                Ringkasan Layanan MSU (Bulan Ini)
+              </h4>
+<button class="text-xs text-blue-600 hover:underline font-semibold" onclick="toggleMSUDrawer(true)">
+                Lihat Detail →
+              </button>
+</div>
+<div class="grid grid-cols-2 gap-3 text-center">
+<div class="bg-blue-50/50 p-3 rounded-xl border border-blue-100">
+<div class="w-8 h-8 rounded-lg bg-blue-600 text-white mx-auto flex items-center justify-center mb-1 shadow-xs">
+<i class="ph ph-map-pin-line text-lg"></i>
+</div>
+<p class="text-lg font-black text-slate-800" id="msu-kunjungan">5.642</p>
+<p class="text-[11px] text-slate-500 font-medium">Kunjungan</p>
+</div>
+<div class="bg-sky-50/50 p-3 rounded-xl border border-sky-100">
+<div class="w-8 h-8 rounded-lg bg-sky-600 text-white mx-auto flex items-center justify-center mb-1 shadow-xs">
+<i class="ph ph-users-three text-lg"></i>
+</div>
+<p class="text-lg font-black text-slate-800" id="msu-warga">312.870</p>
+<p class="text-[11px] text-slate-500 font-medium">Warga Dilayani</p>
+</div>
+<div class="bg-amber-50/50 p-3 rounded-xl border border-amber-100">
+<div class="w-8 h-8 rounded-lg bg-amber-600 text-white mx-auto flex items-center justify-center mb-1 shadow-xs">
+<i class="ph ph-buildings text-lg"></i>
+</div>
+<p class="text-lg font-black text-slate-800" id="msu-kab">18</p>
+<p class="text-[11px] text-slate-500 font-medium">Kab/Kota Aktif</p>
+</div>
+<div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100">
+<div class="w-8 h-8 rounded-lg bg-emerald-600 text-white mx-auto flex items-center justify-center mb-1 shadow-xs">
+<i class="ph ph-tree-evergreen text-lg"></i>
+</div>
+<p class="text-lg font-black text-slate-800" id="msu-desa">126</p>
+<p class="text-[11px] text-slate-500 font-medium">Desa Terjangkau</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END: Map & Donut Distribution Section -->
+<!-- BEGIN: Priority Table & Early Detection Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Table: Daerah Prioritas Intervensi (Col 8) -->
+<div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs flex flex-col justify-between section-scroll-target" id="daerah-prioritas">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-2 border-b border-slate-100">
+<div>
+<h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+<i class="ph ph-warning-octagon text-amber-500 text-lg"></i>
+                  Daftar Daerah Prioritas Intervensi
+                </h3>
+<p class="text-xs text-slate-400">Klik baris kabupaten untuk membuka breakdown pilar kesiapan &amp; aksi langsung.</p>
+</div>
+<span class="text-xs bg-amber-50 text-amber-800 border border-amber-200 font-semibold px-2.5 py-1 rounded-lg self-start">
+                Perlu Intervensi Khusus Kemendagri
+              </span>
+</div>
+<!-- Priority Interactive Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs text-slate-600">
+<thead class="bg-slate-50 text-slate-400 font-bold uppercase tracking-wider text-[10px] border-y border-slate-200/60">
+<tr>
+<th class="py-3 px-3 w-8">No.</th>
+<th class="py-3 px-3">Kabupaten/Kota</th>
+<th class="py-3 px-3">Provinsi</th>
+<th class="py-3 px-3">Klasifikasi</th>
+<th class="py-3 px-3 text-center">Skor IKH</th>
+<th class="py-3 px-3">Rekomendasi Layanan</th>
+<th class="py-3 px-3 text-center">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100" id="priority-table-body">
+<!-- Row 1: Nias Selatan -->
+<tr class="hover:bg-blue-50/40 transition cursor-pointer" onclick="toggleAccordion('acc-row-1')">
+<td class="py-3.5 px-3 font-semibold text-slate-400">1.</td>
+<td class="py-3.5 px-3 font-bold text-slate-800">
+<div class="flex items-center gap-1.5">
+<i class="ph ph-caret-right text-slate-400 transition" id="acc-icon-acc-row-1"></i>
+                        Kab. Nias Selatan
+                      </div>
+</td>
+<td class="py-3.5 px-3 text-slate-600">Sumatera Utara</td>
+<td class="py-3.5 px-3">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100/80 text-amber-800 border border-amber-200">
+                        Manual Dominan
+                      </span>
+</td>
+<td class="py-3.5 px-3 text-center font-bold text-amber-700">1,32</td>
+<td class="py-3.5 px-3 font-semibold text-blue-700">Paket D + MSU</td>
+<td class="py-3.5 px-3 text-center" onclick="event.stopPropagation()">
+<button class="p-1.5 rounded-lg text-blue-600 hover:bg-blue-100 transition" onclick="openScheduleModal('Kab. Nias Selatan')" title="Jadwalkan Armada MSU">
+<i class="ph ph-eye text-base"></i>
+</button>
+</td>
+</tr>
+<!-- Accordion Row 1 Details -->
+<tr class="hidden bg-slate-50/80" id="acc-row-1">
+<td class="p-4 border-t border-slate-200/60" colspan="7">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-3 rounded-xl border border-slate-200">
+<div>
+<p class="text-slate-400">1. Konektivitas &amp; Listrik</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-rose-500 h-2 rounded-full" style="width: 22%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">22% Terjangkau</p>
+</div>
+<div>
+<p class="text-slate-400">2. Literasi Digital SDM</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-amber-500 h-2 rounded-full" style="width: 35%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">35% Memadai</p>
+</div>
+<div>
+<p class="text-slate-400">3. Aksesibilitas Geografis</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-rose-500 h-2 rounded-full" style="width: 18%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">18% (Kepulauan 3T)</p>
+</div>
+</div>
+<div class="mt-2.5 flex items-center justify-between">
+<span class="text-[11px] text-slate-500 italic">Disarankan deploy Mobile Service Unit Armada Speedboat Laut ke pulau terluar.</span>
+<button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition" onclick="openScheduleModal('Kab. Nias Selatan')">
+                          🚀 Jadwalkan MSU Sekarang
+                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Pegunungan Bintang -->
+<tr class="hover:bg-blue-50/40 transition cursor-pointer" onclick="toggleAccordion('acc-row-2')">
+<td class="py-3.5 px-3 font-semibold text-slate-400">2.</td>
+<td class="py-3.5 px-3 font-bold text-slate-800">
+<div class="flex items-center gap-1.5">
+<i class="ph ph-caret-right text-slate-400 transition" id="acc-icon-acc-row-2"></i>
+                        Kab. Pegunungan Bintang
+                      </div>
+</td>
+<td class="py-3.5 px-3 text-slate-600">Papua Pegunungan</td>
+<td class="py-3.5 px-3">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100/80 text-amber-800 border border-amber-200">
+                        Manual Dominan
+                      </span>
+</td>
+<td class="py-3.5 px-3 text-center font-bold text-amber-700">1,45</td>
+<td class="py-3.5 px-3 font-semibold text-blue-700">Paket D + MSU</td>
+<td class="py-3.5 px-3 text-center" onclick="event.stopPropagation()">
+<button class="p-1.5 rounded-lg text-blue-600 hover:bg-blue-100 transition" onclick="openScheduleModal('Kab. Pegunungan Bintang')">
+<i class="ph ph-eye text-base"></i>
+</button>
+</td>
+</tr>
+<!-- Accordion Row 2 Details -->
+<tr class="hidden bg-slate-50/80" id="acc-row-2">
+<td class="p-4 border-t border-slate-200/60" colspan="7">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-3 rounded-xl border border-slate-200">
+<div>
+<p class="text-slate-400">1. Konektivitas &amp; Listrik</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-rose-500 h-2 rounded-full" style="width: 15%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">15% Sangat Minim</p>
+</div>
+<div>
+<p class="text-slate-400">2. Literasi Digital SDM</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-amber-500 h-2 rounded-full" style="width: 25%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">25% Butuh Kader</p>
+</div>
+<div>
+<p class="text-slate-400">3. Aksesibilitas Geografis</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-rose-500 h-2 rounded-full" style="width: 10%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">10% Isolir Lembah</p>
+</div>
+</div>
+<div class="mt-2.5 flex items-center justify-between">
+<span class="text-[11px] text-slate-500 italic">Disarankan armada Pesawat Perintis &amp; V-SAT portabel offline-first sync.</span>
+<button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition" onclick="openScheduleModal('Kab. Pegunungan Bintang')">
+                          🚀 Jadwalkan MSU Sekarang
+                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Malinau -->
+<tr class="hover:bg-blue-50/40 transition cursor-pointer" onclick="toggleAccordion('acc-row-3')">
+<td class="py-3.5 px-3 font-semibold text-slate-400">3.</td>
+<td class="py-3.5 px-3 font-bold text-slate-800">
+<div class="flex items-center gap-1.5">
+<i class="ph ph-caret-right text-slate-400 transition" id="acc-icon-acc-row-3"></i>
+                        Kab. Malinau
+                      </div>
+</td>
+<td class="py-3.5 px-3 text-slate-600">Kalimantan Utara</td>
+<td class="py-3.5 px-3">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-100/80 text-sky-800 border border-sky-200">
+                        Campuran
+                      </span>
+</td>
+<td class="py-3.5 px-3 text-center font-bold text-sky-700">2,38</td>
+<td class="py-3.5 px-3 font-semibold text-blue-700">Paket C + MSU</td>
+<td class="py-3.5 px-3 text-center" onclick="event.stopPropagation()">
+<button class="p-1.5 rounded-lg text-blue-600 hover:bg-blue-100 transition" onclick="openScheduleModal('Kab. Malinau')">
+<i class="ph ph-eye text-base"></i>
+</button>
+</td>
+</tr>
+<!-- Accordion Row 3 Details -->
+<tr class="hidden bg-slate-50/80" id="acc-row-3">
+<td class="p-4 border-t border-slate-200/60" colspan="7">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-3 rounded-xl border border-slate-200">
+<div>
+<p class="text-slate-400">1. Konektivitas &amp; Listrik</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-amber-500 h-2 rounded-full" style="width: 48%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">48% Seluler 3G/4G</p>
+</div>
+<div>
+<p class="text-slate-400">2. Literasi Digital SDM</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 52%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">52% Adaptif</p>
+</div>
+<div>
+<p class="text-slate-400">3. Aksesibilitas Geografis</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-amber-500 h-2 rounded-full" style="width: 40%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">40% Perbatasan Darat</p>
+</div>
+</div>
+<div class="mt-2.5 flex items-center justify-between">
+<span class="text-[11px] text-slate-500 italic">Disarankan armada 4x4 Double Cabin keliling pedalaman.</span>
+<button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition" onclick="openScheduleModal('Kab. Malinau')">
+                          🚀 Jadwalkan MSU Sekarang
+                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Talaud -->
+<tr class="hover:bg-blue-50/40 transition cursor-pointer" onclick="toggleAccordion('acc-row-4')">
+<td class="py-3.5 px-3 font-semibold text-slate-400">4.</td>
+<td class="py-3.5 px-3 font-bold text-slate-800">
+<div class="flex items-center gap-1.5">
+<i class="ph ph-caret-right text-slate-400 transition" id="acc-icon-acc-row-4"></i>
+                        Kab. Kep. Talaud
+                      </div>
+</td>
+<td class="py-3.5 px-3 text-slate-600">Sulawesi Utara</td>
+<td class="py-3.5 px-3">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-100/80 text-sky-800 border border-sky-200">
+                        Campuran
+                      </span>
+</td>
+<td class="py-3.5 px-3 text-center font-bold text-sky-700">2,76</td>
+<td class="py-3.5 px-3 font-semibold text-blue-700">Paket C + MSU</td>
+<td class="py-3.5 px-3 text-center" onclick="event.stopPropagation()">
+<button class="p-1.5 rounded-lg text-blue-600 hover:bg-blue-100 transition" onclick="openScheduleModal('Kab. Kep. Talaud')">
+<i class="ph ph-eye text-base"></i>
+</button>
+</td>
+</tr>
+<!-- Accordion Row 4 Details -->
+<tr class="hidden bg-slate-50/80" id="acc-row-4">
+<td class="p-4 border-t border-slate-200/60" colspan="7">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-3 rounded-xl border border-slate-200">
+<div>
+<p class="text-slate-400">1. Konektivitas &amp; Listrik</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-sky-500 h-2 rounded-full" style="width: 58%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">58% Terhubung</p>
+</div>
+<div>
+<p class="text-slate-400">2. Literasi Digital SDM</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 60%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">60% Aktif</p>
+</div>
+<div>
+<p class="text-slate-400">3. Aksesibilitas Geografis</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-amber-500 h-2 rounded-full" style="width: 45%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">45% Batas Laut Utara</p>
+</div>
+</div>
+<div class="mt-2.5 flex items-center justify-between">
+<span class="text-[11px] text-slate-500 italic">Disarankan perluasan kuota kupon satelit desa &amp; loket terpadu.</span>
+<button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition" onclick="openScheduleModal('Kab. Kep. Talaud')">
+                          🚀 Jadwalkan MSU Sekarang
+                        </button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Badung -->
+<tr class="hover:bg-blue-50/40 transition cursor-pointer" onclick="toggleAccordion('acc-row-5')">
+<td class="py-3.5 px-3 font-semibold text-slate-400">5.</td>
+<td class="py-3.5 px-3 font-bold text-slate-800">
+<div class="flex items-center gap-1.5">
+<i class="ph ph-caret-right text-slate-400 transition" id="acc-icon-acc-row-5"></i>
+                        Kab. Badung
+                      </div>
+</td>
+<td class="py-3.5 px-3 text-slate-600">Bali</td>
+<td class="py-3.5 px-3">
+<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100/80 text-emerald-800 border border-emerald-200">
+                        Digital Dominan
+                      </span>
+</td>
+<td class="py-3.5 px-3 text-center font-bold text-emerald-700">4,38</td>
+<td class="py-3.5 px-3 font-semibold text-slate-700">Paket A (Mandiri)</td>
+<td class="py-3.5 px-3 text-center" onclick="event.stopPropagation()">
+<button class="p-1.5 rounded-lg text-blue-600 hover:bg-blue-100 transition" onclick="openScheduleModal('Kab. Badung')">
+<i class="ph ph-eye text-base"></i>
+</button>
+</td>
+</tr>
+<!-- Accordion Row 5 Details -->
+<tr class="hidden bg-slate-50/80" id="acc-row-5">
+<td class="p-4 border-t border-slate-200/60" colspan="7">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-white p-3 rounded-xl border border-slate-200">
+<div>
+<p class="text-slate-400">1. Konektivitas &amp; Listrik</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-emerald-500 h-2 rounded-full" style="width: 95%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">95% Fiber Optic 5G</p>
+</div>
+<div>
+<p class="text-slate-400">2. Literasi Digital SDM</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-emerald-500 h-2 rounded-full" style="width: 90%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">90% Digital Native</p>
+</div>
+<div>
+<p class="text-slate-400">3. Aksesibilitas Geografis</p>
+<div class="w-full bg-slate-100 h-2 rounded-full mt-1 overflow-hidden">
+<div class="bg-emerald-500 h-2 rounded-full" style="width: 96%"></div>
+</div>
+<p class="font-bold text-slate-700 mt-1">96% Jalan Aspal Halus</p>
+</div>
+</div>
+<div class="mt-2.5 flex items-center justify-between">
+<span class="text-[11px] text-slate-500 italic">Desa percontohan nasional implementasi identitas kependudukan digital (IKD).</span>
+<button class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition" onclick="showToast('Status Badung: Sentra Pembelajaran Desa Digital Nasional')">
+                          Lihat Best Practice
+                        </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Bottom Button: Lihat Selengkapnya -->
+<div class="pt-4 border-t border-slate-100 flex items-center justify-center">
+<button class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1.5 transition" id="btn-load-more" onclick="expandPriorityDistricts()">
+<span>Lihat Selengkapnya</span>
+<i class="ph ph-arrow-right"></i>
+</button>
+</div>
+</div>
+<!-- Early Detection & Alerts (Col 4) -->
+<div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs flex flex-col justify-between section-scroll-target" id="deteksi-dini">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+<h3 class="font-bold text-base text-slate-800 flex items-center gap-2">
+<i class="ph ph-bell-ringing text-rose-500"></i>
+                Notifikasi Deteksi Dini Terbaru
+              </h3>
+<button class="text-xs font-semibold text-blue-600 hover:underline" onclick="openSOPModal(1)">
+                Lihat Semua
+              </button>
+</div>
+<!-- List of Alerts with SOP Actions -->
+<div class="space-y-3">
+<!-- Alert 1: Sumba Barat (High) -->
+<div class="p-3.5 rounded-xl border border-rose-100 bg-rose-50/40 hover:bg-rose-50 cursor-pointer transition flex items-center justify-between group" onclick="openSOPModal(1)">
+<div class="flex items-start space-x-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-rose-600 text-white tracking-wider shrink-0 mt-0.5">
+                    Tinggi
+                  </span>
+<div>
+<h4 class="text-xs font-bold text-slate-800 group-hover:text-rose-700 transition">
+                      Lonjakan pengaduan layanan adminduk
+                    </h4>
+<p class="text-[11px] text-slate-500 mt-0.5">
+                      Kab. Sumba Barat, NTT • <span class="text-slate-400">29 Jul 2025 09:15</span>
+</p>
+</div>
+</div>
+<i class="ph ph-caret-right text-slate-400 group-hover:text-rose-600 group-hover:translate-x-0.5 transition"></i>
+</div>
+<!-- Alert 2: Puncak Jaya (Medium) -->
+<div class="p-3.5 rounded-xl border border-amber-100 bg-amber-50/40 hover:bg-amber-50 cursor-pointer transition flex items-center justify-between group" onclick="openSOPModal(2)">
+<div class="flex items-start space-x-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-amber-500 text-white tracking-wider shrink-0 mt-0.5">
+                    Sedang
+                  </span>
+<div>
+<h4 class="text-xs font-bold text-slate-800 group-hover:text-amber-700 transition">
+                      Keterlambatan layanan kesehatan
+                    </h4>
+<p class="text-[11px] text-slate-500 mt-0.5">
+                      Kab. Puncak Jaya, Papua • <span class="text-slate-400">29 Jul 2025 08:42</span>
+</p>
+</div>
+</div>
+<i class="ph ph-caret-right text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 transition"></i>
+</div>
+<!-- Alert 3: Mahakam Ulu (Low) -->
+<div class="p-3.5 rounded-xl border border-emerald-100 bg-emerald-50/30 hover:bg-emerald-50 cursor-pointer transition flex items-center justify-between group" onclick="openSOPModal(3)">
+<div class="flex items-start space-x-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-600 text-white tracking-wider shrink-0 mt-0.5">
+                    Rendah
+                  </span>
+<div>
+<h4 class="text-xs font-bold text-slate-800 group-hover:text-emerald-700 transition">
+                      Gangguan jaringan di beberapa desa
+                    </h4>
+<p class="text-[11px] text-slate-500 mt-0.5">
+                      Kab. Mahakam Ulu, Kaltim • <span class="text-slate-400">29 Jul 2025 07:30</span>
+</p>
+</div>
+</div>
+<i class="ph ph-caret-right text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition"></i>
+</div>
+</div>
+</div>
+<!-- Bottom Alert Banner info -->
+<div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+<span class="flex items-center gap-1.5"><i class="ph ph-check-circle text-emerald-500 text-sm"></i> SLA Penanganan: &lt; 24 Jam</span>
+<span class="text-blue-600 font-semibold cursor-pointer" onclick="showToast('Semua alert tersinkronisasi dengan Ditjen Dukcapil Pusat')">Sync Aktif</span>
+</div>
+</div>
+</div>
+<!-- END: Priority Table & Early Detection Section -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: Footer -->
+<footer class="mt-auto border-t border-slate-200/80 bg-white py-6 px-8 text-xs text-slate-500 flex flex-col md:flex-row items-center justify-between gap-3">
+<div>
+<p>© 2025 LENTERA - Kementerian Dalam Negeri Republik Indonesia. Hak cipta dilindungi undang-undang.</p>
+</div>
+<div class="flex items-center space-x-6 font-medium">
+<a class="hover:text-slate-900 transition" href="#kebijakan" onclick="showToast('Halaman Kebijakan Privasi Ditjen Dukcapil')">Kebijakan Privasi</a>
+<span class="text-slate-300">|</span>
+<a class="hover:text-slate-900 transition" href="#syarat" onclick="showToast('Halaman Syarat &amp; Ketentuan SPBE Inklusif')">Syarat &amp; Ketentuan</a>
+<span class="text-slate-300">|</span>
+<a class="hover:text-slate-900 transition" href="#bantuan" onclick="showToast('Helpdesk Dukcapil: 1500-537')">Bantuan Helpdesk</a>
+</div>
+</footer>
+<!-- END: Footer -->
+</div>
+<!-- BEGIN: Modals & Drawers -->
+<!-- 1. MODAL: SOP Pengaduan Dukcapil (Deteksi Dini) -->
+<div class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4" id="sop-modal">
+<div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 relative transform transition-all">
+<!-- Close button -->
+<button class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1 rounded-lg" onclick="closeSOPModal()">
+<i class="ph ph-x text-xl"></i>
+</button>
+<!-- Modal Header -->
+<div class="flex items-center space-x-3.5 mb-4">
+<div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl font-bold" id="sop-badge-icon">
+<i class="ph ph-warning"></i>
+</div>
+<div>
+<span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-rose-600 text-white" id="sop-level">
+            Prioritas Tinggi
+          </span>
+<h3 class="font-extrabold text-base text-slate-900 mt-1" id="sop-title">
+            Lonjakan Pengaduan Layanan Adminduk
+          </h3>
+<p class="text-xs text-slate-500" id="sop-location">Kab. Sumba Barat, Nusa Tenggara Timur</p>
+</div>
+</div>
+<!-- SOP Action Checklist -->
+<div class="space-y-3 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200/80 mb-5">
+<h5 class="font-bold text-slate-700 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+<i class="ph ph-clipboard-text text-blue-600"></i>
+          Langkah Tindakan Tanggap Cepat (SOP Dukcapil)
+        </h5>
+<label class="flex items-start space-x-2.5 cursor-pointer">
+<input checked="" class="rounded text-blue-600 focus:ring-blue-500 mt-0.5" type="checkbox">
+<span class="text-slate-600">Kirim peringatan darurat otomatis ke Dinas Dukcapil Kabupaten terkait.</span>
+</label>
+<label class="flex items-start space-x-2.5 cursor-pointer">
+<input checked="" class="rounded text-blue-600 focus:ring-blue-500 mt-0.5" type="checkbox">
+<span class="text-slate-600">Alokasikan unit Mobile Service Unit (MSU) darat / perahu perintis terdekat.</span>
+</label>
+<label class="flex items-start space-x-2.5 cursor-pointer">
+<input class="rounded text-blue-600 focus:ring-blue-500 mt-0.5" type="checkbox">
+<span class="text-slate-600">Buka akses loket cadangan offline dengan pencatatan biometric cache.</span>
+</label>
+</div>
+<!-- Impact Metrics -->
+<div class="grid grid-cols-2 gap-3 mb-5 text-center text-xs">
+<div class="p-2.5 bg-slate-100 rounded-xl">
+<span class="text-slate-400 block text-[10px]">Warga Terdampak Estimasi</span>
+<span class="text-base font-bold text-slate-800" id="sop-impact-warga">4.210 Jiwa</span>
+</div>
+<div class="p-2.5 bg-slate-100 rounded-xl">
+<span class="text-slate-400 block text-[10px]">Batas Waktu Intervensi</span>
+<span class="text-base font-bold text-rose-600">&lt; 18 Jam</span>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="flex items-center space-x-3">
+<button class="flex-1 py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-100 transition" onclick="closeSOPModal()">
+          Tandai Selesai
+        </button>
+<button class="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-1.5" onclick="dispatchTeamAction()">
+<i class="ph ph-paper-plane-tilt"></i>
+<span>Dispatch Tim MSU</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 2. MODAL: Jadwalkan Mobile Service Unit (MSU) -->
+<div class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4" id="schedule-msu-modal">
+<div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 relative">
+<button class="absolute top-5 right-5 text-slate-400 hover:text-slate-700" onclick="closeScheduleModal()">
+<i class="ph ph-x text-xl"></i>
+</button>
+<div class="flex items-center space-x-3 mb-4">
+<div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+<i class="ph ph-truck"></i>
+</div>
+<div>
+<h3 class="font-extrabold text-base text-slate-900">Jadwalkan Layanan Armada MSU</h3>
+<p class="text-xs text-blue-600 font-bold" id="schedule-target-region">Kab. Nias Selatan</p>
+</div>
+</div>
+<form class="space-y-3.5 text-xs" onsubmit="handleScheduleSubmit(event)">
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Jenis Moda Armada</label>
+<select class="w-full rounded-xl border-slate-300 text-xs focus:ring-blue-500 focus:border-blue-500" id="select-armada-type">
+<option value="darat">Mobil 4x4 Off-road Satelit (Jalur Darat)</option>
+<option value="laut">Speedboat Cepat Katamaran (Gugus Pulau)</option>
+<option value="udara">Pesawat Perintis Kargo Ringan (Pedalaman)</option>
+</select>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Tanggal Keberangkatan</label>
+<input class="w-full rounded-xl border-slate-300 text-xs focus:ring-blue-500 focus:border-blue-500" type="date" value="2025-08-01">
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Fokus Layanan Utama</label>
+<div class="space-y-1.5 pt-1">
+<label class="flex items-center gap-2">
+<input checked="" class="rounded text-blue-600" type="checkbox">
+<span>Perekaman Biometrik KTP-el &amp; KIA</span>
+</label>
+<label class="flex items-center gap-2">
+<input checked="" class="rounded text-blue-600" type="checkbox">
+<span>Aktivasi Identitas Kependudukan Digital (IKD)</span>
+</label>
+<label class="flex items-center gap-2">
+<input class="rounded text-blue-600" type="checkbox">
+<span>Penerbitan Akta Kelahiran &amp; Kematian Langsung</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block font-semibold text-slate-700 mb-1">Catatan Logistik Lapangan</label>
+<textarea class="w-full rounded-xl border-slate-300 text-xs focus:ring-blue-500" placeholder="Contoh: Perlu koordinasi dengan posko perbatasan &amp; genset tambahan..." rows="2"></textarea>
+</div>
+<div class="pt-2 flex gap-3">
+<button class="flex-1 py-2.5 rounded-xl border border-slate-200 font-bold text-slate-600 hover:bg-slate-50" onclick="closeScheduleModal()" type="button">
+            Batal
+          </button>
+<button class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition" type="submit">
+            Konfirmasi Jadwal
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- 3. SLIDE-OVER DRAWER: Monitoring Detail MSU -->
+<div class="hidden fixed inset-0 z-50 overflow-hidden bg-slate-900/50 backdrop-blur-2xs transition-opacity" id="msu-drawer">
+<div class="absolute inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl flex flex-col justify-between">
+<!-- Drawer Header -->
+<div class="p-6 border-b border-slate-200 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center">
+<i class="ph ph-truck text-lg"></i>
+</div>
+<div>
+<h3 class="font-bold text-base text-slate-900">Mobile Service Unit (MSU) Live</h3>
+<p class="text-xs text-slate-400">Status 18 Armada Nasional Beroperasi</p>
+</div>
+</div>
+<button class="p-2 text-slate-400 hover:text-slate-700" onclick="toggleMSUDrawer(false)">
+<i class="ph ph-x text-lg"></i>
+</button>
+</div>
+<!-- Drawer Content: Live Fleet Status -->
+<div class="flex-1 p-6 overflow-y-auto space-y-4 custom-scrollbar text-xs">
+<!-- Live Alert Banner -->
+<div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-800 flex items-center gap-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+<span>Semua armada terhubung ke satelit LEO tanpa gangguan transmisi.</span>
+</div>
+<!-- Fleet 1 -->
+<div class="p-4 rounded-xl border border-slate-200 hover:border-blue-300 transition bg-slate-50/50">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-bold text-slate-800 text-sm">Armada MSU 07 - Nias</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">Laut Katamaran</span>
+</div>
+<p class="text-slate-500 mb-2">Lokasi: Pulau Tanahmasa, Kep. Batu (Nias Selatan)</p>
+<div class="flex justify-between items-center text-[11px] text-slate-400 pt-2 border-t border-slate-200">
+<span>Selesai: 420 KTP-el</span>
+<span class="text-emerald-600 font-semibold">● Aktif Bertugas</span>
+</div>
+</div>
+<!-- Fleet 2 -->
+<div class="p-4 rounded-xl border border-slate-200 hover:border-blue-300 transition bg-slate-50/50">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-bold text-slate-800 text-sm">Armada MSU 12 - Peg. Bintang</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Udara Perintis</span>
+</div>
+<p class="text-slate-500 mb-2">Lokasi: Distrik Kiwirok, Papua Pegunungan</p>
+<div class="flex justify-between items-center text-[11px] text-slate-400 pt-2 border-t border-slate-200">
+<span>Selesai: 310 KTP &amp; Akta</span>
+<span class="text-emerald-600 font-semibold">● Aktif Bertugas</span>
+</div>
+</div>
+<!-- Fleet 3 -->
+<div class="p-4 rounded-xl border border-slate-200 hover:border-blue-300 transition bg-slate-50/50">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-bold text-slate-800 text-sm">Armada MSU 03 - Malinau</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-800">Darat 4x4 Off-Road</span>
+</div>
+<p class="text-slate-500 mb-2">Lokasi: Long Ampung, Kayan Selatan (Kaltara)</p>
+<div class="flex justify-between items-center text-[11px] text-slate-400 pt-2 border-t border-slate-200">
+<span>Selesai: 590 Rekam IKD</span>
+<span class="text-sky-600 font-semibold">● Standby Posko</span>
+</div>
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="p-5 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+<button class="text-xs font-bold text-blue-600 hover:underline" onclick="showToast('Mengunduh rute log GPS seluruh armada...')">
+          Unduh Log Rute GPS (.kml)
+        </button>
+<button class="px-4 py-2 bg-slate-900 text-white font-bold rounded-xl text-xs hover:bg-slate-800" onclick="toggleMSUDrawer(false)">
+          Tutup
+        </button>
+</div>
+</div>
+</div>
+<!-- 4. FLOATING TOAST NOTIFICATION CONTAINER -->
+<div class="fixed top-5 right-5 z-50 transition-all duration-300 transform translate-y-[-120%] opacity-0 pointer-events-none" id="toast-box">
+<div class="bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700/80 flex items-center space-x-3 text-xs">
+<div class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold" id="toast-icon-wrapper">
+<i class="ph ph-info"></i>
+</div>
+<p class="font-medium text-slate-200 leading-snug" id="toast-message">Pesan notifikasi sistem LENTERA.</p>
+</div>
+</div>
+<!-- END: Modals & Drawers -->
+<!-- BEGIN: Interactive Dashboard Logic Scripts -->
+<script data-purpose="dashboard-dataset">
+    // Master Province Data for Real-time KPI Manipulation
+    const PROVINCE_DATA = {
+      nasional: {
+        title: "Semua Provinsi (Nasional)",
+        totalDesa: "83.862",
+        totalDesc: "100% dari total desa nasional",
+        skorIKH: "2,41",
+        kategori: "Campuran",
+        kategoriColor: "text-sky-600",
+        manualDesa: "24.318",
+        manualPct: "(29,01%)",
+        campuranDesa: "38.765",
+        campuranPct: "(46,25%)",
+        digitalDesa: "20.779",
+        digitalPct: "(24,74%)",
+        msuKunjungan: "5.642",
+        msuWarga: "312.870",
+        msuKab: "18",
+        msuDesa: "126",
+        donutManualDash: "69.3 238.7",
+        donutCampuranDash: "110.4 238.7",
+        donutCampuranOffset: "-69.3",
+        donutDigitalDash: "59 238.7",
+        donutDigitalOffset: "-179.7"
+      },
+      papua: {
+        title: "Papua & Papua Pegunungan",
+        totalDesa: "5.521",
+        totalDesc: "6,5% dari desa nasional",
+        skorIKH: "1,48",
+        kategori: "Manual Dominan",
+        kategoriColor: "text-amber-600",
+        manualDesa: "4.140",
+        manualPct: "(75,0%)",
+        campuranDesa: "1.104",
+        campuranPct: "(20,0%)",
+        digitalDesa: "277",
+        digitalPct: "(5,0%)",
+        msuKunjungan: "1.240",
+        msuWarga: "68.450",
+        msuKab: "8",
+        msuDesa: "48",
+        donutManualDash: "179 238.7",
+        donutCampuranDash: "47.7 238.7",
+        donutCampuranOffset: "-179",
+        donutDigitalDash: "12 238.7",
+        donutDigitalOffset: "-226.7"
+      },
+      sumut: {
+        title: "Sumatera Utara",
+        totalDesa: "6.110",
+        totalDesc: "7,3% dari desa nasional",
+        skorIKH: "2,35",
+        kategori: "Campuran",
+        kategoriColor: "text-sky-600",
+        manualDesa: "2.138",
+        manualPct: "(35,0%)",
+        campuranDesa: "2.750",
+        campuranPct: "(45,0%)",
+        digitalDesa: "1.222",
+        digitalPct: "(20,0%)",
+        msuKunjungan: "720",
+        msuWarga: "45.100",
+        msuKab: "3",
+        msuDesa: "22",
+        donutManualDash: "83.5 238.7",
+        donutCampuranDash: "107.4 238.7",
+        donutCampuranOffset: "-83.5",
+        donutDigitalDash: "47.8 238.7",
+        donutDigitalOffset: "-190.9"
+      },
+      jabar: {
+        title: "Jawa Barat",
+        totalDesa: "5.957",
+        totalDesc: "7,1% dari desa nasional",
+        skorIKH: "3,88",
+        kategori: "Digital Dominan",
+        kategoriColor: "text-emerald-600",
+        manualDesa: "476",
+        manualPct: "(8,0%)",
+        campuranDesa: "2.502",
+        campuranPct: "(42,0%)",
+        digitalDesa: "2.979",
+        digitalPct: "(50,0%)",
+        msuKunjungan: "210",
+        msuWarga: "19.500",
+        msuKab: "1",
+        msuDesa: "6",
+        donutManualDash: "19.1 238.7",
+        donutCampuranDash: "100.2 238.7",
+        donutCampuranOffset: "-19.1",
+        donutDigitalDash: "119.4 238.7",
+        donutDigitalOffset: "-119.3"
+      },
+      bali: {
+        title: "Bali",
+        totalDesa: "716",
+        totalDesc: "0,85% dari desa nasional",
+        skorIKH: "4,42",
+        kategori: "Digital Dominan",
+        kategoriColor: "text-emerald-600",
+        manualDesa: "21",
+        manualPct: "(3,0%)",
+        campuranDesa: "129",
+        campuranPct: "(18,0%)",
+        digitalDesa: "566",
+        digitalPct: "(79,0%)",
+        msuKunjungan: "45",
+        msuWarga: "4.120",
+        msuKab: "1",
+        msuDesa: "2",
+        donutManualDash: "7.1 238.7",
+        donutCampuranDash: "42.9 238.7",
+        donutCampuranOffset: "-7.1",
+        donutDigitalDash: "188.7 238.7",
+        donutDigitalOffset: "-50"
+      },
+      kaltara: {
+        title: "Kalimantan Utara",
+        totalDesa: "482",
+        totalDesc: "0,57% dari desa nasional",
+        skorIKH: "2,38",
+        kategori: "Campuran",
+        kategoriColor: "text-sky-600",
+        manualDesa: "193",
+        manualPct: "(40,0%)",
+        campuranDesa: "241",
+        campuranPct: "(50,0%)",
+        digitalDesa: "48",
+        digitalPct: "(10,0%)",
+        msuKunjungan: "340",
+        msuWarga: "14.200",
+        msuKab: "2",
+        msuDesa: "14",
+        donutManualDash: "95.5 238.7",
+        donutCampuranDash: "119.3 238.7",
+        donutCampuranOffset: "-95.5",
+        donutDigitalDash: "23.9 238.7",
+        donutDigitalOffset: "-214.8"
+      },
+      sulut: {
+        title: "Sulawesi Utara",
+        totalDesa: "1.674",
+        totalDesc: "2,0% dari desa nasional",
+        skorIKH: "2,82",
+        kategori: "Campuran",
+        kategoriColor: "text-sky-600",
+        manualDesa: "418",
+        manualPct: "(25,0%)",
+        campuranDesa: "921",
+        campuranPct: "(55,0%)",
+        digitalDesa: "335",
+        digitalPct: "(20,0%)",
+        msuKunjungan: "290",
+        msuWarga: "18.600",
+        msuKab: "2",
+        msuDesa: "12",
+        donutManualDash: "59.6 238.7",
+        donutCampuranDash: "131.3 238.7",
+        donutCampuranOffset: "-59.6",
+        donutDigitalDash: "47.8 238.7",
+        donutDigitalOffset: "-190.9"
+      }
+    };
+
+    let currentZoom = 1;
+    let currentSelectedDistrict = "Kab. Nias Selatan";
+  </script>
+<script data-purpose="dashboard-interactions">
+    // 1. Toast Notification Handler
+    function showToast(message, icon = "ph-info") {
+      const toast = document.getElementById('toast-box');
+      const text = document.getElementById('toast-message');
+      const iconWrapper = document.getElementById('toast-icon-wrapper');
+      
+      text.innerText = message;
+      iconWrapper.innerHTML = `<i class="ph ${icon} text-sm"></i>`;
+      
+      toast.classList.remove('translate-y-[-120%]', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-[-120%]', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    // 2. Smooth Scrolling to Dashboard Section with Active Pill State
+    const SHORTCUT_NAMES = {
+      'indikator-utama': 'Indikator Utama (5 Metrik KPI)',
+      'peta-nusantara': 'Peta Kesiapan Hybrid Nusantara',
+      'daerah-prioritas': 'Tabel Daerah Prioritas Intervensi',
+      'ringkasan-msu': 'Monitoring Armada Mobile Service Unit (MSU)',
+      'deteksi-dini': 'Notifikasi Deteksi Dini & SOP Cepat'
+    };
+
+    function setActivePill(sectionId) {
+      document.querySelectorAll('.shortcut-pill').forEach(pill => {
+        if (pill.getAttribute('data-target') === sectionId) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+    }
+
+    function scrollToSection(sectionId) {
+      const targetElement = document.getElementById(sectionId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActivePill(sectionId);
+        const name = SHORTCUT_NAMES[sectionId] || sectionId;
+        showToast(`Menavigasi ke: ${name}`, 'ph-arrow-down');
+      }
+    }
+
+    // Dynamic Active State Observer based on Scroll Position
+    const sectionsToObserve = ['indikator-utama', 'peta-nusantara', 'daerah-prioritas', 'ringkasan-msu', 'deteksi-dini'];
+    const scrollObserverOptions = {
+      root: null,
+      rootMargin: '-110px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActivePill(entry.target.id);
+        }
+      });
+    }, scrollObserverOptions);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      sectionsToObserve.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) sectionObserver.observe(el);
+      });
+    });
+
+    // 3. Real-time Province Filter Switching
+    function handleProvinceChange(provinceKey) {
+      const data = PROVINCE_DATA[provinceKey];
+      if (!data) return;
+
+      // Update KPI Cards
+      document.getElementById('kpi-total-desa').innerText = data.totalDesa;
+      document.getElementById('kpi-total-desc').innerText = data.totalDesc;
+      document.getElementById('kpi-indeks-skor').innerText = data.skorIKH;
+      
+      const katEl = document.getElementById('kpi-indeks-kategori');
+      katEl.innerText = data.kategori;
+      katEl.className = `font-bold ${data.kategoriColor}`;
+
+      document.getElementById('kpi-manual-desa').innerText = data.manualDesa;
+      document.getElementById('kpi-manual-persen').innerText = data.manualPct;
+      document.getElementById('kpi-campuran-desa').innerText = data.campuranDesa;
+      document.getElementById('kpi-campuran-persen').innerText = data.campuranPct;
+      document.getElementById('kpi-digital-desa').innerText = data.digitalDesa;
+      document.getElementById('kpi-digital-persen').innerText = data.digitalPct;
+
+      // Update MSU Quick Stats
+      document.getElementById('msu-kunjungan').innerText = data.msuKunjungan;
+      document.getElementById('msu-warga').innerText = data.msuWarga;
+      document.getElementById('msu-kab').innerText = data.msuKab;
+      document.getElementById('msu-desa').innerText = data.msuDesa;
+
+      // Update Donut Chart
+      document.getElementById('donut-manual').setAttribute('stroke-dasharray', data.donutManualDash);
+      document.getElementById('donut-campuran').setAttribute('stroke-dasharray', data.donutCampuranDash);
+      document.getElementById('donut-campuran').setAttribute('stroke-dashoffset', data.donutCampuranOffset);
+      document.getElementById('donut-digital').setAttribute('stroke-dasharray', data.donutDigitalDash);
+      document.getElementById('donut-digital').setAttribute('stroke-dashoffset', data.donutDigitalOffset);
+
+      document.getElementById('chart-val-manual').innerText = `${data.manualDesa} Desa`;
+      document.getElementById('chart-pct-manual').innerText = data.manualPct.replace(/[()]/g, '');
+      document.getElementById('chart-val-campuran').innerText = `${data.campuranDesa} Desa`;
+      document.getElementById('chart-pct-campuran').innerText = data.campuranPct.replace(/[()]/g, '');
+      document.getElementById('chart-val-digital').innerText = `${data.digitalDesa} Desa`;
+      document.getElementById('chart-pct-digital').innerText = data.digitalPct.replace(/[()]/g, '');
+
+      document.getElementById('donut-center-value').innerText = data.totalDesa;
+
+      showToast(`Filter Diperbarui: ${data.title}`, "ph-check-circle");
+    }
+
+    // 4. Map Zoom & Reset Controls
+    function zoomMap(factor) {
+      currentZoom *= factor;
+      if (currentZoom < 0.6) currentZoom = 0.6;
+      if (currentZoom > 2.5) currentZoom = 2.5;
+      document.getElementById('map-svg-wrapper').style.transform = `scale(${currentZoom})`;
+    }
+
+    function resetMapZoom() {
+      currentZoom = 1;
+      document.getElementById('map-svg-wrapper').style.transform = 'scale(1)';
+      closeInspectorCard();
+      showToast("Tampilan peta direset ke posisi awal");
+    }
+
+    // 5. Map Region Inspector Click Handler
+    function inspectRegion(regionId) {
+      const card = document.getElementById('island-inspector-card');
+      const daerahEl = document.getElementById('inspect-daerah');
+      const provEl = document.getElementById('inspect-prov');
+      const skorEl = document.getElementById('inspect-skor');
+      const paketEl = document.getElementById('inspect-paket');
+
+      if (regionId === 'nias') {
+        currentSelectedDistrict = "Kab. Nias Selatan";
+        daerahEl.innerText = "Kab. Nias Selatan";
+        provEl.innerText = "Sumatera Utara";
+        skorEl.innerText = "1,32 (Manual Dominan)";
+        skorEl.className = "font-bold text-amber-600";
+        paketEl.innerText = "Paket D + Armada Laut Speedboat";
+      } else if (regionId === 'pegbintang' || regionId === 'papua') {
+        currentSelectedDistrict = "Kab. Pegunungan Bintang";
+        daerahEl.innerText = "Kab. Pegunungan Bintang";
+        provEl.innerText = "Papua Pegunungan";
+        skorEl.innerText = "1,45 (Manual Dominan)";
+        skorEl.className = "font-bold text-amber-600";
+        paketEl.innerText = "Paket D + MSU Pesawat Perintis";
+      } else if (regionId === 'bali') {
+        currentSelectedDistrict = "Kab. Badung";
+        daerahEl.innerText = "Kab. Badung & Sekitarnya";
+        provEl.innerText = "Bali";
+        skorEl.innerText = "4,38 (Digital Dominan)";
+        skorEl.className = "font-bold text-emerald-600";
+        paketEl.innerText = "Paket A (Fasilitasi Mandiri SPBE)";
+      } else if (regionId === 'kaltara') {
+        currentSelectedDistrict = "Kab. Malinau";
+        daerahEl.innerText = "Kab. Malinau (Perbatasan)";
+        provEl.innerText = "Kalimantan Utara";
+        skorEl.innerText = "2,38 (Campuran)";
+        skorEl.className = "font-bold text-sky-600";
+        paketEl.innerText = "Paket C + MSU 4x4 Off-Road";
+      } else if (regionId === 'talaud' || regionId === 'sulut') {
+        currentSelectedDistrict = "Kab. Kep. Talaud";
+        daerahEl.innerText = "Kab. Kep. Talaud";
+        provEl.innerText = "Sulawesi Utara";
+        skorEl.innerText = "2,76 (Campuran)";
+        skorEl.className = "font-bold text-sky-600";
+        paketEl.innerText = "Paket C + MSU Satelit";
+      } else if (regionId === 'sumba') {
+        currentSelectedDistrict = "Kab. Sumba Barat";
+        daerahEl.innerText = "Kab. Sumba Barat";
+        provEl.innerText = "Nusa Tenggara Timur";
+        skorEl.innerText = "1,62 (Manual Dominan)";
+        skorEl.className = "font-bold text-amber-600";
+        paketEl.innerText = "Paket D + Tim Reaksi Cepat Dukcapil";
+      } else {
+        currentSelectedDistrict = "Pulau Sumatera / Regional";
+        daerahEl.innerText = "Wilayah Regional Terpilih";
+        provEl.innerText = "Nasional";
+        skorEl.innerText = "2,41 (Campuran)";
+        skorEl.className = "font-bold text-blue-600";
+        paketEl.innerText = "Paket B / C Sesuai Tipologi";
+      }
+
+      card.classList.remove('hidden');
+    }
+
+    function closeInspectorCard() {
+      document.getElementById('island-inspector-card').classList.add('hidden');
+    }
+
+    // 6. Donut Slice Click Interactive Highlights
+    function highlightDonutCategory(kategoriName, jumlahDesa, persentase) {
+      document.getElementById('donut-center-title').innerText = kategoriName.split(' ')[0];
+      document.getElementById('donut-center-value').innerText = persentase;
+      document.getElementById('donut-center-sub').innerText = jumlahDesa;
+      showToast(`Filter Visual Donut: ${kategoriName} - ${jumlahDesa} (${persentase})`);
+    }
+
+    function filterMapByLegend(type) {
+      showToast(`Menyorot peta untuk kategori: ${type.toUpperCase()}`, "ph-funnel");
+      const paths = document.querySelectorAll('.map-svg-node');
+      paths.forEach(el => {
+        el.style.opacity = '0.35';
+      });
+
+      if (type === 'manual') {
+        document.getElementById('path-sumatera').style.opacity = '1';
+        document.getElementById('path-papua').style.opacity = '1';
+        document.getElementById('node-nias').style.opacity = '1';
+        document.getElementById('node-pegbintang').style.opacity = '1';
+      } else if (type === 'campuran') {
+        document.getElementById('path-jawa').style.opacity = '1';
+        document.getElementById('path-kalimantan').style.opacity = '1';
+        document.getElementById('path-sulawesi').style.opacity = '1';
+      } else if (type === 'digital') {
+        document.getElementById('path-bali').style.opacity = '1';
+      }
+
+      setTimeout(() => {
+        paths.forEach(el => el.style.opacity = '1');
+      }, 4000);
+    }
+
+    // 7. Accordion Table Toggle
+    function toggleAccordion(rowId) {
+      const row = document.getElementById(rowId);
+      const icon = document.getElementById(`acc-icon-${rowId}`);
+      if (row.classList.contains('hidden')) {
+        row.classList.remove('hidden');
+        icon.classList.add('rotate-90', 'text-blue-600');
+      } else {
+        row.classList.add('hidden');
+        icon.classList.remove('rotate-90', 'text-blue-600');
+      }
+    }
+
+    // 8. Expand Additional Priority Districts
+    function expandPriorityDistricts() {
+      const tableBody = document.getElementById('priority-table-body');
+      const btn = document.getElementById('btn-load-more');
+
+      const additionalRows = `
+        <tr class="hover:bg-blue-50/40 transition cursor-pointer" onclick="toggleAccordion('acc-row-6')">
+          <td class="py-3.5 px-3 font-semibold text-slate-400">6.</td>
+          <td class="py-3.5 px-3 font-bold text-slate-800">
+            <div class="flex items-center gap-1.5">
+              <i class="ph ph-caret-right text-slate-400 transition" id="acc-icon-acc-row-6"></i>
+              Kab. Asmat
+            </div>
+          </td>
+          <td class="py-3.5 px-3 text-slate-600">Papua Selatan</td>
+          <td class="py-3.5 px-3">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100/80 text-amber-800 border border-amber-200">
+              Manual Dominan
+            </span>
+          </td>
+          <td class="py-3.5 px-3 text-center font-bold text-amber-700">1,21</td>
+          <td class="py-3.5 px-3 font-semibold text-blue-700">Paket D + MSU Perahu</td>
+          <td class="py-3.5 px-3 text-center" onclick="event.stopPropagation()">
+            <button onclick="openScheduleModal('Kab. Asmat')" class="p-1.5 rounded-lg text-blue-600 hover:bg-blue-100 transition">
+              <i class="ph ph-eye text-base"></i>
+            </button>
+          </td>
+        </tr>
+        <tr id="acc-row-6" class="hidden bg-slate-50/80">
+          <td colspan="7" class="p-4 border-t border-slate-200/60">
+            <div class="text-xs text-slate-600">Wilayah rawa pasang surut. Butuh MSU Speedboat bertenaga surya dan loket jemput bola.</div>
+          </td>
+        </tr>
+        <tr class="hover:bg-blue-50/40 transition cursor-pointer" onclick="toggleAccordion('acc-row-7')">
+          <td class="py-3.5 px-3 font-semibold text-slate-400">7.</td>
+          <td class="py-3.5 px-3 font-bold text-slate-800">
+            <div class="flex items-center gap-1.5">
+              <i class="ph ph-caret-right text-slate-400 transition" id="acc-icon-acc-row-7"></i>
+              Kab. Kepulauan Mentawai
+            </div>
+          </td>
+          <td class="py-3.5 px-3 text-slate-600">Sumatera Barat</td>
+          <td class="py-3.5 px-3">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100/80 text-amber-800 border border-amber-200">
+              Manual Dominan
+            </span>
+          </td>
+          <td class="py-3.5 px-3 text-center font-bold text-amber-700">1,50</td>
+          <td class="py-3.5 px-3 font-semibold text-blue-700">Paket D + MSU Laut</td>
+          <td class="py-3.5 px-3 text-center" onclick="event.stopPropagation()">
+            <button onclick="openScheduleModal('Kab. Kepulauan Mentawai')" class="p-1.5 rounded-lg text-blue-600 hover:bg-blue-100 transition">
+              <i class="ph ph-eye text-base"></i>
+            </button>
+          </td>
+        </tr>
+        <tr id="acc-row-7" class="hidden bg-slate-50/80">
+          <td colspan="7" class="p-4 border-t border-slate-200/60">
+            <div class="text-xs text-slate-600">Akses pulau luar terisolir saat gelombang laut tinggi. Memerlukan buffer stok blangko KTP fisik.</div>
+          </td>
+        </tr>
+      `;
+
+      tableBody.insertAdjacentHTML('beforeend', additionalRows);
+      btn.style.display = 'none';
+      showToast("Memuat 2 kabupaten prioritas tambahan.");
+    }
+
+    // 9. MSU Drawer & Modal Functions
+    function toggleMSUDrawer(isOpen) {
+      const drawer = document.getElementById('msu-drawer');
+      if (isOpen) {
+        drawer.classList.remove('hidden');
+      } else {
+        drawer.classList.add('hidden');
+      }
+    }
+
+    function openScheduleModal(districtName) {
+      document.getElementById('schedule-target-region').innerText = districtName;
+      document.getElementById('schedule-msu-modal').classList.remove('hidden');
+    }
+
+    function closeScheduleModal() {
+      document.getElementById('schedule-msu-modal').classList.add('hidden');
+    }
+
+    function handleScheduleSubmit(e) {
+      e.preventDefault();
+      closeScheduleModal();
+      showToast("Berhasil! Jadwal deploy armada MSU telah diterbitkan ke Dukcapil Wilayah.", "ph-check-circle");
+    }
+
+    // 10. SOP Early Detection Modal
+    function openSOPModal(alertId) {
+      const modal = document.getElementById('sop-modal');
+      const title = document.getElementById('sop-title');
+      const loc = document.getElementById('sop-location');
+      const warga = document.getElementById('sop-impact-warga');
+
+      if (alertId === 1) {
+        title.innerText = "Lonjakan Pengaduan Layanan Adminduk";
+        loc.innerText = "Kab. Sumba Barat, Nusa Tenggara Timur";
+        warga.innerText = "4.210 Jiwa";
+      } else if (alertId === 2) {
+        title.innerText = "Keterlambatan Layanan Kesehatan Terpadu";
+        loc.innerText = "Kab. Puncak Jaya, Papua";
+        warga.innerText = "2.850 Jiwa";
+      } else {
+        title.innerText = "Gangguan Jaringan V-SAT di Beberapa Desa";
+        loc.innerText = "Kab. Mahakam Ulu, Kalimantan Timur";
+        warga.innerText = "1.420 Jiwa";
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeSOPModal() {
+      document.getElementById('sop-modal').classList.add('hidden');
+      showToast("Status notifikasi SOP diperbarui.");
+    }
+
+    function dispatchTeamAction() {
+      closeSOPModal();
+      showToast("Perintah Dispatch Tim MSU Terkirim via Radio Satelit!", "ph-paper-plane-tilt");
+    }
+
+    function triggerDataExport() {
+      showToast("Membuat Rekap Data Nasional (.xlsx)... Selesai!");
+    }
+
+    // Sidebar Toggle for smaller views
+    document.getElementById('sidebar-toggle').addEventListener('click', () => {
+      const sidebar = document.getElementById('main-sidebar');
+      sidebar.classList.toggle('hidden');
+    });
+  </script>
+</body></html>

@@ -83,8 +83,9 @@
 </head>
 <body class="bg-[#f3f6fb] text-slate-800 antialiased font-sans min-h-screen flex">
 
-  <!-- BEGIN: Sidebar (Seragam dengan dashboard.html & jadwal-kegiatan.html) -->
-<aside class="w-72 bg-[#0b1329] text-white flex-shrink-0 flex flex-col justify-between transition-all duration-300 z-30 min-h-screen sticky top-0 shadow-2xl overflow-hidden" id="main-sidebar">    <!-- Top Branding & Navigation -->
+  <!-- BEGIN: Sidebar -->
+  <aside class="w-72 bg-[#0b1329] text-white shrink-0 flex flex-col justify-between transition-all duration-300 z-30 min-h-screen sticky top-0 shadow-2xl overflow-hidden" id="main-sidebar">
+    <!-- Top Branding & Navigation -->
     <div class="p-6">
       <!-- Logo Lentera -->
       <div class="flex items-center space-x-3.5 mb-8">
@@ -110,58 +111,49 @@
 
       <!-- Navigation Menu -->
       <nav aria-label="Menu Utama" class="space-y-1.5">
-        <!-- 1. Beranda -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html">
           <i class="ph ph-house group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm font-semibold">Beranda</span>
         </a>
 
-        <!-- 2. Indeks Kesiapan Hybrid (HALAMAN AKTIF) -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl bg-blue-600 text-white font-medium shadow-md shadow-blue-600/30 transition" href="index.html">
           <i class="ph ph-chart-bar text-xl"></i>
           <span class="text-sm font-semibold">Indeks Kesiapan Hybrid</span>
         </a>
 
-        <!-- 3. Paket Layanan -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#paket-layanan">
           <i class="ph ph-package group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm">Paket Layanan</span>
         </a>
 
-        <!-- 4. Mobile Service Unit -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#ringkasan-msu">
           <i class="ph ph-truck group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm">Mobile Service Unit</span>
           <span class="ml-auto text-[10px] bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full border border-amber-500/30">18 Armada</span>
         </a>
 
-        <!-- 5. Deteksi Dini & Pengawasan -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#deteksi-dini">
           <i class="ph ph-shield-check group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm">Deteksi Dini &amp; Pengawasan</span>
           <span class="w-2 h-2 rounded-full bg-rose-500 ml-auto animate-pulse"></span>
         </a>
 
-        <!-- 6. Jadwal & Reminder -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="jadwal-kegiatan.html">
           <i class="ph ph-calendar-blank group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm">Jadwal &amp; Reminder</span>
           <span class="ml-auto text-[10px] bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">4 Agenda</span>
         </a>
 
-        <!-- 7. Data & Peta -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#peta-nusantara">
           <i class="ph ph-map-trifold group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm">Data &amp; Peta</span>
         </a>
 
-        <!-- 8. Laporan & Analitik -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#laporan-analitik">
           <i class="ph ph-file-text group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm">Laporan &amp; Analitik</span>
         </a>
 
-        <!-- 9. Pengaturan -->
         <a class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/60 transition group" href="dashboard.html#pengaturan">
           <i class="ph ph-gear group-hover:text-amber-400 transition text-xl"></i>
           <span class="text-sm">Pengaturan</span>
@@ -192,12 +184,12 @@
   <!-- Main Area -->
   <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
     <!-- BEGIN: TopHeader -->
-     <header class="bg-white border-b border-slate-200/80 h-20 flex items-center justify-between px-8 shrink-0 z-10 sticky top-0 backdrop-blur-md bg-white/95 shadow-xs">
-  <div class="flex items-center gap-3">
-    <!-- Tambahkan Tombol Hamburger di Sini -->
-    <button onclick="toggleSidebar()" class="text-slate-600 hover:text-slate-900 p-2 rounded-xl hover:bg-slate-100 transition-all flex items-center justify-center focus:outline-none" aria-label="Toggle Navigation">
-      <i class="ph ph-list text-2xl"></i>
-    </button>
+    <header class="bg-white border-b border-slate-200/80 h-20 flex items-center justify-between px-8 shrink-0 z-10 sticky top-0 backdrop-blur-md bg-white/95 shadow-xs">
+      <div class="flex items-center gap-3">
+        <button onclick="toggleSidebar()" class="text-slate-600 hover:text-slate-900 p-2 rounded-xl hover:bg-slate-100 transition-all flex items-center justify-center focus:outline-none" aria-label="Toggle Navigation">
+          <i class="ph ph-list text-2xl"></i>
+        </button>
+        <div class="flex items-center text-sm font-medium text-slate-600">
           <a class="hover:text-slate-800" href="dashboard.html">LENTERA</a>
           <span class="mx-1.5 text-slate-300">/</span>
           <span class="text-slate-900 font-semibold">Pengukuran Indeks Kesiapan Hybrid (IKH)</span>
@@ -547,102 +539,145 @@
         { range: document.getElementById('range-s4'), num: document.getElementById('num-s4'), weight: 0.20, name: 'Demografi', leg: document.getElementById('val-leg-s4'), slice: document.getElementById('slice-demografi') }
       ];
 
-      const scoreDisplay = document.getElementById('display-skor-ikh');
-      const badgeKlasifikasi = document.getElementById('badge-klasifikasi');
-      const labelTingkat = document.getElementById('label-tingkat-kesiapan');
-      const donutCenter = document.getElementById('donut-center-val');
-      const modalBreakdownTable = document.getElementById('modal-breakdown-table');
-      const modalTotalScore = document.getElementById('modal-total-score');
-      const modal = document.getElementById('modal-detail');
-      const toast = document.getElementById('toast-notif');
-      const circumference = 2 * Math.PI * 38;
+      function calculateScore() {
+        let total = 0;
+        const totalCircumference = 238.76;
+        let currentOffset = 0;
 
-      function recalculate() {
-        let totalScore = 0;
-        const rawValues = [];
-        const weightedPoints = [];
+        const tableBody = document.getElementById('modal-breakdown-table');
+        if (tableBody) tableBody.innerHTML = '';
 
         inputs.forEach(item => {
-          let val = parseFloat(item.range.value) || 0;
-          val = Math.min(100, Math.max(0, val));
-          rawValues.push(val);
-          const pts = val * item.weight;
-          weightedPoints.push(pts);
-          totalScore += pts;
-          if (item.leg) item.leg.textContent = `${Math.round(val)}/100`;
+          let val = parseFloat(item.num.value) || 0;
+          if (val > 100) val = 100;
+          if (val < 0) val = 0;
+          
+          item.num.value = val;
+          item.range.value = val;
+
+          const points = val * item.weight;
+          total += points;
+
+          if (item.leg) item.leg.textContent = `${val}/100`;
+
+          if (item.slice) {
+            const sliceLength = (points / 100) * totalCircumference;
+            item.slice.style.strokeDasharray = `${sliceLength} ${totalCircumference}`;
+            item.slice.style.strokeDashoffset = `-${currentOffset}`;
+            currentOffset += sliceLength;
+          }
+
+          if (tableBody) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td class="py-2 font-medium text-slate-800">${item.name}</td>
+              <td class="py-2 text-slate-500">${(item.weight * 100)}%</td>
+              <td class="py-2 font-semibold text-slate-700">${val}</td>
+              <td class="py-2 text-right font-bold text-slate-900">${points.toFixed(2)}</td>
+            `;
+            tableBody.appendChild(tr);
+          }
         });
 
-        scoreDisplay.textContent = totalScore.toFixed(2).replace('.', ',');
-        donutCenter.textContent = totalScore.toFixed(2);
+        const formattedTotal = total.toFixed(2);
+        const displayTotal = formattedTotal.replace('.', ',');
 
-        if (totalScore < 35) {
-          badgeKlasifikasi.textContent = 'MANUAL DOMINAN';
-          badgeKlasifikasi.className = 'px-5 py-1.5 rounded-full font-bold text-sm bg-rose-100 text-rose-800 border border-rose-300';
-          labelTingkat.textContent = 'Rendah';
-        } else if (totalScore < 70) {
-          badgeKlasifikasi.textContent = 'CAMPURAN';
-          badgeKlasifikasi.className = 'px-5 py-1.5 rounded-full font-bold text-sm bg-amber-100 text-amber-800 border border-amber-300';
-          labelTingkat.textContent = 'Sedang';
-        } else {
-          badgeKlasifikasi.textContent = 'DIGITAL DOMINAN';
-          badgeKlasifikasi.className = 'px-5 py-1.5 rounded-full font-bold text-sm bg-emerald-100 text-emerald-800 border border-emerald-300';
-          labelTingkat.textContent = 'Tinggi';
+        const displaySkor = document.getElementById('display-skor-ikh');
+        if (displaySkor) displaySkor.textContent = displayTotal;
+
+        const donutCenter = document.getElementById('donut-center-val');
+        if (donutCenter) donutCenter.textContent = formattedTotal;
+
+        const modalTotal = document.getElementById('modal-total-score');
+        if (modalTotal) modalTotal.textContent = `${formattedTotal} / 100`;
+
+        const badge = document.getElementById('badge-klasifikasi');
+        const labelKesiapan = document.getElementById('label-tingkat-kesiapan');
+
+        if (badge && labelKesiapan) {
+          if (total >= 70) {
+            badge.textContent = 'DIGITAL';
+            badge.className = 'px-5 py-1.5 rounded-full font-bold text-sm bg-emerald-100 text-emerald-800 border border-emerald-300/60 shadow-xs';
+            labelKesiapan.textContent = 'Tinggi';
+            labelKesiapan.className = 'text-emerald-600 font-semibold';
+          } else if (total >= 40) {
+            badge.textContent = 'CAMPURAN';
+            badge.className = 'px-5 py-1.5 rounded-full font-bold text-sm bg-amber-100 text-amber-800 border border-amber-300/60 shadow-xs';
+            labelKesiapan.textContent = 'Sedang';
+            labelKesiapan.className = 'text-amber-600 font-semibold';
+          } else {
+            badge.textContent = 'KONVENSIONAL';
+            badge.className = 'px-5 py-1.5 rounded-full font-bold text-sm bg-rose-100 text-rose-800 border border-rose-300/60 shadow-xs';
+            labelKesiapan.textContent = 'Rendah';
+            labelKesiapan.className = 'text-rose-600 font-semibold';
+          }
         }
-
-        let accumulatedOffset = 0;
-        const totalForChart = totalScore > 0 ? totalScore : 1;
-        inputs.forEach((item, idx) => {
-          const sliceLen = (weightedPoints[idx] / totalForChart) * circumference;
-          item.slice.setAttribute('stroke-dasharray', `${sliceLen} ${circumference}`);
-          item.slice.setAttribute('stroke-dashoffset', -accumulatedOffset);
-          accumulatedOffset += sliceLen;
-        });
-
-        modalBreakdownTable.innerHTML = '';
-        inputs.forEach((item, idx) => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td class="py-2 font-medium">${item.name}</td>
-            <td class="py-2 text-slate-500">${Math.round(item.weight * 100)}%</td>
-            <td class="py-2 font-bold">${rawValues[idx]}</td>
-            <td class="py-2 text-right font-bold text-slate-800">${weightedPoints[idx].toFixed(2)}</td>
-          `;
-          modalBreakdownTable.appendChild(row);
-        });
-        modalTotalScore.textContent = `${totalScore.toFixed(2).replace('.', ',')} / 100`;
       }
 
       inputs.forEach(item => {
-        item.range.addEventListener('input', () => { item.num.value = item.range.value; recalculate(); });
-        item.num.addEventListener('input', () => { item.range.value = item.num.value; recalculate(); });
-      });
-
-      document.getElementById('btn-reset').addEventListener('click', () => {
-        [40, 31, 34, 65].forEach((val, idx) => {
-          inputs[idx].range.value = val;
-          inputs[idx].num.value = val;
+        item.range.addEventListener('input', (e) => {
+          item.num.value = e.target.value;
+          calculateScore();
         });
-        recalculate();
+        item.num.addEventListener('input', (e) => {
+          item.range.value = e.target.value;
+          calculateScore();
+        });
       });
 
-      document.getElementById('btn-save').addEventListener('click', () => {
-        toast.classList.remove('translate-y-24', 'opacity-0');
-        setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3000);
+      document.getElementById('btn-reset')?.addEventListener('click', () => {
+        const defaultValues = [40, 31, 34, 65];
+        inputs.forEach((item, idx) => {
+          item.num.value = defaultValues[idx];
+          item.range.value = defaultValues[idx];
+        });
+        calculateScore();
       });
 
-      document.getElementById('btn-modal-trigger').addEventListener('click', () => modal.classList.remove('hidden'));
-      document.getElementById('btn-close-modal').addEventListener('click', () => modal.classList.add('hidden'));
-      document.getElementById('btn-close-modal-footer').addEventListener('click', () => modal.classList.add('hidden'));
+      document.getElementById('btn-save')?.addEventListener('click', () => {
+        const toast = document.getElementById('toast-notif');
+        if (toast) {
+          toast.classList.remove('translate-y-24', 'opacity-0');
+          toast.classList.add('translate-y-0', 'opacity-100');
+          setTimeout(() => {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-24', 'opacity-0');
+          }, 3000);
+        }
+      });
 
-      recalculate();
+      const modal = document.getElementById('modal-detail');
+      const trigger = document.getElementById('btn-modal-trigger');
+      const closeBtn = document.getElementById('btn-close-modal');
+      const closeFooter = document.getElementById('btn-close-modal-footer');
+
+      function openModal() {
+        modal?.classList.remove('hidden');
+        modal?.classList.add('flex');
+      }
+
+      function closeModal() {
+        modal?.classList.remove('flex');
+        modal?.classList.add('hidden');
+      }
+
+      trigger?.addEventListener('click', openModal);
+      closeBtn?.addEventListener('click', closeModal);
+      closeFooter?.addEventListener('click', closeModal);
+
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      calculateScore();
     });
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('-translate-x-full');
+      }
+    }
   </script>
 </body>
 </html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LENTERA</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
